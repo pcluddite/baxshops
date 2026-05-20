@@ -193,13 +193,13 @@ public final class ItemUtil
     private static List<Pattern> ominousPatterns()
     {
         Pattern[] patterns = new Pattern[8];
-        patterns[0] = new Pattern(DyeColor.CYAN, PatternType.RHOMBUS_MIDDLE);
+        patterns[0] = new Pattern(DyeColor.CYAN, PatternType.RHOMBUS);
         patterns[1] = new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_BOTTOM);
         patterns[2] = new Pattern(DyeColor.GRAY, PatternType.STRIPE_CENTER);
         patterns[3] = new Pattern(DyeColor.LIGHT_GRAY, PatternType.BORDER);
         patterns[4] = new Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE);
         patterns[5] = new Pattern(DyeColor.LIGHT_GRAY, PatternType.HALF_HORIZONTAL);
-        patterns[6] = new Pattern(DyeColor.LIGHT_GRAY, PatternType.CIRCLE_MIDDLE);
+        patterns[6] = new Pattern(DyeColor.LIGHT_GRAY, PatternType.CIRCLE);
         patterns[7] = new Pattern(DyeColor.BLACK, PatternType.BORDER);
         return Arrays.asList(patterns);
     }
