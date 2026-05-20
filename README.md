@@ -2,7 +2,7 @@ BaxShops
 =========
 
 BaxShops is a shop plugin for Bukkit, based on and intended to be the ongoing replacement for [SwornShops](https://github.com/nathan/shops)
-which has since been deleted. The original project can still be found [here](https://github.com/pcluddite/nathan-shops)
+which has since been deleted. The original project can still be found [here](https://github.com/pcluddite/nathan-shops).
 
 **FEATURES**
 * Ability to convert from the old shops.dat file produced by SwornShops
