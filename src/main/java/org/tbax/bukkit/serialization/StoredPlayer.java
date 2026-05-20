@@ -18,11 +18,12 @@
  */
 package org.tbax.bukkit.serialization;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.tbax.baxshops.ShopPlugin;
 import org.tbax.baxshops.versioning.LegacyOfflinePlayer;
 import org.tbax.bukkit.notification.Notification;
@@ -32,6 +33,8 @@ import org.tbax.baxshops.serialization.BaxConfig;
 import org.tbax.baxshops.serialization.UpgradeableSerializable;
 import org.tbax.baxshops.serialization.UpgradeableSerialization;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSerializable
@@ -116,7 +119,7 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
         if (player.isOnline()) {
             lastSeenName = player.getPlayer().getName();
         }
-        return  player;
+        return player;
     }
 
     public boolean isLegacyPlayer()
@@ -156,6 +159,12 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
         if (uuid == null)
             uuid = ERROR_UUID;
         return uuid;
+    }
+
+    @Override
+    public @NotNull PlayerProfile getPlayerProfile()
+    {
+        return getOfflinePlayer().getPlayerProfile();
     }
 
     public Collection<Notification> getNotifications()
@@ -201,6 +210,24 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
     }
 
     @Override
+    public @Nullable BanEntry<PlayerProfile> ban(@Nullable String reason, @Nullable Date expires, @Nullable String source)
+    {
+        return getOfflinePlayer().ban(reason, expires, source);
+    }
+
+    @Override
+    public @Nullable BanEntry<PlayerProfile> ban(@Nullable String reason, @Nullable Instant expires, @Nullable String source)
+    {
+        return getOfflinePlayer().ban(reason, expires, source);
+    }
+
+    @Override
+    public @Nullable BanEntry<PlayerProfile> ban(@Nullable String reason, @Nullable Duration duration, @Nullable String source)
+    {
+        return getOfflinePlayer().ban(reason, duration, source);
+    }
+
+    @Override
     public boolean isWhitelisted()
     {
         return getOfflinePlayer().isWhitelisted();
@@ -243,6 +270,132 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
     }
 
     @Override
+    public @Nullable Location getRespawnLocation()
+    {
+        return getOfflinePlayer().getRespawnLocation();
+    }
+
+    @Override
+    public void incrementStatistic(@NotNull Statistic statistic) throws IllegalArgumentException
+    {
+        getOfflinePlayer().incrementStatistic(statistic);
+    }
+
+    @Override
+    public void decrementStatistic(@NotNull Statistic statistic) throws IllegalArgumentException
+    {
+        getOfflinePlayer().decrementStatistic(statistic);
+    }
+
+    @Override
+    public void incrementStatistic(@NotNull Statistic statistic, int amount) throws IllegalArgumentException
+    {
+        getOfflinePlayer().incrementStatistic(statistic, amount);
+    }
+
+    @Override
+    public void decrementStatistic(@NotNull Statistic statistic, int amount) throws IllegalArgumentException
+    {
+        getOfflinePlayer().decrementStatistic(statistic, amount);
+    }
+
+    @Override
+    public void setStatistic(@NotNull Statistic statistic, int newValue) throws IllegalArgumentException
+    {
+        getOfflinePlayer().setStatistic(statistic, newValue);
+    }
+
+    @Override
+    public int getStatistic(@NotNull Statistic statistic) throws IllegalArgumentException
+    {
+        return 0;
+    }
+
+    @Override
+    public void incrementStatistic(@NotNull Statistic statistic, @NotNull Material material) throws IllegalArgumentException
+    {
+        getOfflinePlayer().incrementStatistic(statistic, material);
+    }
+
+    @Override
+    public void decrementStatistic(@NotNull Statistic statistic, @NotNull Material material) throws IllegalArgumentException
+    {
+        getOfflinePlayer().decrementStatistic(statistic, material);
+    }
+
+    @Override
+    public int getStatistic(@NotNull Statistic statistic, @NotNull Material material) throws IllegalArgumentException
+    {
+        return getOfflinePlayer().getStatistic(statistic, material);
+    }
+
+    @Override
+    public void incrementStatistic(@NotNull Statistic statistic, @NotNull Material material, int amount) throws IllegalArgumentException
+    {
+        getOfflinePlayer().incrementStatistic(statistic, material, amount);
+    }
+
+    @Override
+    public void decrementStatistic(@NotNull Statistic statistic, @NotNull Material material, int amount) throws IllegalArgumentException
+    {
+        getOfflinePlayer().decrementStatistic(statistic, material, amount);
+    }
+
+    @Override
+    public void setStatistic(@NotNull Statistic statistic, @NotNull Material material, int newValue) throws IllegalArgumentException
+    {
+        getOfflinePlayer().setStatistic(statistic, material, newValue);
+    }
+
+    @Override
+    public void incrementStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType) throws IllegalArgumentException
+    {
+        getOfflinePlayer().incrementStatistic(statistic, entityType);
+    }
+
+    @Override
+    public void decrementStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType) throws IllegalArgumentException
+    {
+        getOfflinePlayer().decrementStatistic(statistic, entityType);
+    }
+
+    @Override
+    public int getStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType) throws IllegalArgumentException
+    {
+        return getOfflinePlayer().getStatistic(statistic, entityType);
+    }
+
+    @Override
+    public void incrementStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType, int amount) throws IllegalArgumentException
+    {
+        getOfflinePlayer().incrementStatistic(statistic, entityType, amount);
+    }
+
+    @Override
+    public void decrementStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType, int amount)
+    {
+        getOfflinePlayer().decrementStatistic(statistic, entityType, amount);
+    }
+
+    @Override
+    public void setStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType, int newValue)
+    {
+        getOfflinePlayer().setStatistic(statistic, entityType, newValue);
+    }
+
+    @Override
+    public @Nullable Location getLastDeathLocation()
+    {
+        return getOfflinePlayer().getLastDeathLocation();
+    }
+
+    @Override
+    public @Nullable Location getLocation()
+    {
+        return getOfflinePlayer().getLocation();
+    }
+
+    @Override
     public boolean isOp()
     {
         return getOfflinePlayer().isOp();
@@ -260,7 +413,7 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
         if (this == obj)
             return true;
         if (obj instanceof OfflinePlayer)
-            return equals((OfflinePlayer)obj);
+            return equals((OfflinePlayer) obj);
         return false;
     }
 
