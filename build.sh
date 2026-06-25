@@ -18,19 +18,20 @@
 #  USA
 #
 
-if [ "$JAVA_HOME" = "" ]; then
-    export JAVA_HOME=$(readlink /etc/alternatives/javac)
-    export JAVA_HOME=${JAVA_HOME%/*}
-    export JAVA_HOME=${JAVA_HOME%/*}
+if [[ -z "$JAVA_HOME" ]]; then
+    export JAVA_HOME="$(readlink -f /etc/alternatives/javac)"
+    export JAVA_HOME="${JAVA_HOME%/*}"
+    export JAVA_HOME="${JAVA_HOME%/*}"
 fi
+
 SHOPS_VER="1.0b4"
 VERSION='snapshot'
-echo "JAVA_HOME=$JAVA_HOME"
-echo "SHOPS_VER=$SHOPS_VER"
 
+printf 'JAVA_HOME= %s\n' "${JAVA_HOME}"
+printf 'SHOPS_VER= %s\n' "${SHOPS_VER}"
 
 compile() {    
-    echo "Building version $VERSION..."
+    printf 'Building version %s...\n' "${VERSION}"
     
     mvn install clean
     STATUS=$?
@@ -43,7 +44,7 @@ compile() {
         fi
     fi
     
-    echo "Done."
+    printf 'Done.\n'
     return $STATUS
 }
 
