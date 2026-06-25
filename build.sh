@@ -30,23 +30,19 @@ VERSION='snapshot'
 printf 'JAVA_HOME= %s\n' "${JAVA_HOME}"
 printf 'SHOPS_VER= %s\n' "${SHOPS_VER}"
 
-compile() {    
-    printf 'Building version %s...\n' "${VERSION}"
+printf 'Building version %s...\n' "${VERSION}"
     
-    mvn install clean
-    STATUS=$?
-    if [[ $STATUS = 0 ]]; then
-        if mvn package; then
-            if [[ ! -d './bin' ]]; then
-                mkdir './bin'
-            fi
-            cp -v "./target/baxshops-${SHOPS_VER}-SNAPSHOT.jar" "./bin/baxshops-$SHOPS_VER-SNAPSHOT.jar"
+mvn install clean
+STATUS=$?
+if [[ $STATUS = 0 ]]; then
+    if mvn package; then
+        if [[ ! -d './bin' ]]; then
+            mkdir './bin'
         fi
+        cp -v "./target/baxshops-${SHOPS_VER}-SNAPSHOT.jar" "./bin/baxshops-$SHOPS_VER-SNAPSHOT.jar"
     fi
+fi
     
-    printf 'Done.\n'
-    return $STATUS
-}
+printf 'Done.\n'
+exit $STATUS
 
-compile
-exit $?
