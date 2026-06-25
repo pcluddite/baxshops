@@ -18,7 +18,7 @@
 #  USA
 #
 
-if [[ -z "$JAVA_HOME" ]]; then
+if [[ -z "${JAVA_HOME}" ]]; then
     export JAVA_HOME="$(readlink -f /etc/alternatives/javac)"
     export JAVA_HOME="${JAVA_HOME%/*}"
     export JAVA_HOME="${JAVA_HOME%/*}"
@@ -32,17 +32,25 @@ printf 'SHOPS_VER= %s\n' "${SHOPS_VER}"
 
 printf 'Building version %s...\n' "${VERSION}"
     
-mvn install clean
-STATUS=$?
-if [[ $STATUS = 0 ]]; then
-    if mvn package; then
-        if [[ ! -d './bin' ]]; then
-            mkdir './bin'
-        fi
-        cp -v "./target/baxshops-${SHOPS_VER}-SNAPSHOT.jar" "./bin/baxshops-$SHOPS_VER-SNAPSHOT.jar"
+if ! mvn install clean; then
+    printf 'Failed to build %s\n' "${VERSION}" 1>&2
+    exit 1
+fi
+
+if ! mvn package; then
+    printf 'Failed to package %s\n' "${VERSION}" 1>&2
+    exit 1
+fi
+
+if [[ ! -d './bin' ]]; then
+    if ! mkdir './bin'; then
+        exit 1
     fi
 fi
-    
-printf 'Done.\n'
-exit $STATUS
+
+if cp -v "./target/baxshops-${SHOPS_VER}-SNAPSHOT.jar" "./bin/baxshops-${SHOPS_VER}-SNAPSHOT.jar"; then
+    printf 'Done.\n'
+else
+    exit 1
+fi
 
