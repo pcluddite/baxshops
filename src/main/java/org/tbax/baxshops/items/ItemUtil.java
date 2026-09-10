@@ -18,6 +18,7 @@
  */
 package org.tbax.baxshops.items;
 
+import com.google.gson.JsonObject;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -539,9 +540,9 @@ public final class ItemUtil
         ((Sign)block.getBlockData()).setRotation(face);
     }
 
-    public static String getNBTTag(ItemStack stack)
+    public static JsonObject getNBTTag(ItemStack stack)
     {
-        return new NBTTagable(stack).toString();
+        return new NBTTagable(stack).asJsonObject();
     }
 
     public static PotionInfo getNbtPotionInfo(PotionType type)

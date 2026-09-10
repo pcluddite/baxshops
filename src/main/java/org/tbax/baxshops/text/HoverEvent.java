@@ -28,6 +28,7 @@ public final class HoverEvent
 {
     private String event;
     private JsonElement value;
+    private JsonObject contents;
 
     private HoverEvent(String event, String value)
     {
@@ -39,6 +40,12 @@ public final class HoverEvent
     {
         this.event = event;
         this.value = value.toJsonObject();
+    }
+
+    private HoverEvent(String event, JsonObject contents)
+    {
+        this.event = event;
+        this.contents = contents;
     }
 
     public String getEvent()
@@ -60,7 +67,12 @@ public final class HoverEvent
     {
         JsonObject object = new JsonObject();
         object.addProperty("action", event);
-        object.add("value", value);
+        if (value != null) {
+            object.add("value", value);
+        }
+        if (contents != null) {
+            object.add("contents", contents);
+        }
         return object;
     }
 

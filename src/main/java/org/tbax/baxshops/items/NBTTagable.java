@@ -120,6 +120,9 @@ public final class NBTTagable
         if (displayElement != null) {
             tag.add("display", displayElement);
         }
+        if (stack.getType().getMaxDurability() > 0) {
+            tag.addProperty("Damage", ItemUtil.getDurability(stack));
+        }
 
         if (itemMeta instanceof PotionMeta) {
             PotionMeta potionMeta = (PotionMeta)itemMeta;
@@ -179,15 +182,17 @@ public final class NBTTagable
 
     public JsonElement asJsonElement()
     {
+        return asJsonObject();
+    }
+
+    public JsonObject asJsonObject()
+    {
         JsonObject object = new JsonObject();
         object.addProperty("id", stack.getType().getKey().toString());
-        object.addProperty("Count", stack.getAmount());
-        if (stack.getType().getMaxDurability() > 0) {
-            object.addProperty("Damage", ItemUtil.getDurability(stack));
-        }
+        object.addProperty("count", stack.getAmount());
         JsonElement tag = getTagElement();
         if (tag != null) {
-            object.add("tag", tag);
+            object.addProperty("nbt", tag.toString());
         }
         return object;
     }
