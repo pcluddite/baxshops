@@ -21,6 +21,8 @@ package org.tbax.baxshops.text;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,6 +34,9 @@ import org.tbax.baxshops.nms.network.chat.IChatBaseComponent;
 import org.tbax.baxshops.nms.network.protocol.game.PacketPlayOutChat;
 import org.tbax.baxshops.nms.server.network.PlayerConnection;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 @SuppressWarnings({ "unused", "UnusedReturnValue" })
@@ -226,14 +231,10 @@ public final class ChatComponent
     public void sendTo(Player player)
     {
         try {
-            IChatBaseComponent component = IChatBaseComponent.ChatSerializer.a(toString());
-            PacketPlayOutChat packet = new PacketPlayOutChat(component, ChatMessageType.a, UUID.randomUUID());
-
-            CraftPlayer craftPlayer = new CraftPlayer(player);
-            PlayerConnection playerConnection = craftPlayer.getHandle().playerConnection;
-            playerConnection.sendPacket(packet);
-        }
-        catch (ReflectiveOperationException e) {
+            Component component = GsonComponentSerializer.gson().deserialize(toString());
+            Method sendMessage = Player.class.getMethod("sendMessage", Class.forName("net.kyori.adventure.text.Component"));
+            sendMessage.invoke(player, component);
+        } catch (ReflectiveOperationException e) {
             ShopPlugin.logSevere("Reflection error at " +  e.getMessage());
             player.sendMessage(toPlainString());
         }
