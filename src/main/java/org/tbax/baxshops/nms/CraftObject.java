@@ -23,6 +23,6 @@ public abstract class CraftObject extends RuntimeObject
     @Override
     public String __pkg_name()
     {
-        return "org.bukkit.craftbukkit." + MINECRAFT_VERSION;
+        return CRAFTBUKKIT_PACKAGE;
     }
 }

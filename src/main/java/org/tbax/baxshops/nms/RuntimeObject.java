@@ -26,8 +26,19 @@ import java.util.Map;
 
 public abstract class RuntimeObject
 {
-    public static final String MINECRAFT_VERSION = Bukkit.getServer().getClass().getPackage().getName()
-            .replace(".", ",").split(",")[3];
+    public static final String CRAFTBUKKIT_PACKAGE;
+
+    static
+    {
+        String packageName = "org.bukkit.craftbukkit";
+        String runtimePackageName = Bukkit.getServer().getClass().getPackage().getName();
+        if (runtimePackageName.equals(packageName)) {
+            CRAFTBUKKIT_PACKAGE = packageName;
+        }
+        else {
+            CRAFTBUKKIT_PACKAGE = packageName + "." + runtimePackageName.split("\\.")[3];
+        }
+    }
 
     private final static Map<String, Class<?>> classCache = new HashMap<>();
 
@@ -59,4 +70,9 @@ public abstract class RuntimeObject
     }
 
     public abstract Object __object() throws ReflectiveOperationException;
+
+    public static Class<?> getCraftbukkitClass(String className) throws ReflectiveOperationException
+    {
+        return __class(CRAFTBUKKIT_PACKAGE + "." + className);
+    }
 }
