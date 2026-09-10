@@ -163,7 +163,21 @@ public final class ItemUtil
             item.setItemMeta(meta);
         }
         try {
-            return getNmsCopy(item).getName().getString();
+            // CraftItemStack.asNMSCopy
+            Class<?> craftItemStackClass = RuntimeObject.getCraftbukkitClass("inventory.CraftItemStack");
+            Method asNMSCopy = craftItemStackClass.getMethod("asNMSCopy", ItemStack.class);
+            Object nmsStack = asNMSCopy.invoke(null, item);
+
+            // ItemStack.getHoverName()
+            Class<?> nmsItemStackClass = RuntimeObject.getRuntimeClass("net.minecraft.world.item.ItemStack");
+            Method getHoverName = nmsItemStackClass.getMethod("getHoverName");
+            Object component = getHoverName.invoke(nmsStack);
+
+            // Component.getString()
+            Class<?> componentClass = RuntimeObject.getRuntimeClass("net.minecraft.network.chat.Component");
+            Method getString = componentClass.getMethod("getString");
+
+            return (String) getString.invoke(component);
         }
         catch (ReflectiveOperationException | ClassCastException e) {
             ShopPlugin.logWarning("Could not get item name for " + item.getType());

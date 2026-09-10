@@ -73,6 +73,11 @@ public abstract class RuntimeObject
 
     public static Class<?> getCraftbukkitClass(String className) throws ReflectiveOperationException
     {
-        return __class(CRAFTBUKKIT_PACKAGE + "." + className);
+        return getRuntimeClass(CRAFTBUKKIT_PACKAGE + "." + className);
+    }
+
+    public static Class<?> getRuntimeClass(String className) throws ReflectiveOperationException
+    {
+        return __class(className);
     }
 }
