@@ -28,14 +28,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.ShopPlugin;
-import org.tbax.baxshops.nms.*;
-import org.tbax.baxshops.nms.network.chat.ChatMessageType;
-import org.tbax.baxshops.nms.network.chat.IChatBaseComponent;
-import org.tbax.baxshops.nms.network.protocol.game.PacketPlayOutChat;
-import org.tbax.baxshops.nms.server.network.PlayerConnection;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 

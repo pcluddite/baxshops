@@ -38,7 +38,6 @@ import org.tbax.baxshops.BaxEntry;
 import org.tbax.baxshops.BaxShop;
 import org.tbax.baxshops.Format;
 import org.tbax.baxshops.ShopPlugin;
-import org.tbax.baxshops.nms.world.item.NmsItemStack;
 import org.tbax.baxshops.nms.RuntimeObject;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.errors.PrematureAbortException;
@@ -183,16 +182,6 @@ public final class ItemUtil
             ShopPlugin.logWarning("Could not get item name for " + item.getType());
             return item.getType().toString();
         }
-    }
-
-    private static Method asNmsCopyMethod = null;
-    public static NmsItemStack getNmsCopy(ItemStack stack) throws ReflectiveOperationException
-    {
-        if (asNmsCopyMethod == null) {
-            Class<?> craftItemStackCls = RuntimeObject.getCraftbukkitClass("inventory.CraftItemStack");
-            asNmsCopyMethod = craftItemStackCls.getMethod("asNMSCopy", ItemStack.class);
-        }
-        return new NmsItemStack(asNmsCopyMethod.invoke(null, stack));
     }
 
     public static boolean isOminousBanner(@NotNull ItemStack stack)
