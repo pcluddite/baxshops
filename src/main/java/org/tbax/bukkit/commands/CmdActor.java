@@ -42,6 +42,7 @@ import org.tbax.baxshops.versioning.LegacyPlayerUtil;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @SuppressWarnings("unused")
 public interface CmdActor extends CommandSender
@@ -242,6 +243,20 @@ public interface CmdActor extends CommandSender
         getSender().removeAttachment(permissionAttachment);
     }
 
+    default void sendMessage(@Nullable UUID sender, @NotNull String message)
+    {
+        getSender().sendMessage(sender, message);
+    }
+
+    default void sendMessage(@Nullable UUID sender, @NotNull String... messages)
+    {
+        getSender().sendMessage(sender, messages);
+    }
+
+    default @NotNull Spigot spigot()
+    {
+        return getSender().spigot();
+    }
 
     default void sendError(String msg)
     {

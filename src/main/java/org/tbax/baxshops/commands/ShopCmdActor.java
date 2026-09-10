@@ -34,7 +34,10 @@ import org.tbax.baxshops.ShopPlugin;
 import org.tbax.baxshops.ShopSelection;
 import org.tbax.bukkit.serialization.StoredPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public final class ShopCmdActor implements CmdActor
@@ -182,23 +185,5 @@ public final class ShopCmdActor implements CmdActor
     public StoredPlayer getStoredPlayer()
     {
         return ShopPlugin.getState().getOfflinePlayer(getPlayer().getUniqueId());
-    }
-
-    @Override
-    public void sendMessage(@Nullable UUID sender, @NotNull String message)
-    {
-        getSender().sendMessage(sender, message);
-    }
-
-    @Override
-    public void sendMessage(@Nullable UUID sender, @NotNull String... messages)
-    {
-        getSender().sendMessage(sender, messages);
-    }
-
-    @Override
-    public @NotNull Spigot spigot()
-    {
-        return getSender().spigot();
     }
 }
