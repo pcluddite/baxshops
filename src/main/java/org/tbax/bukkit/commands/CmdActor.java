@@ -47,21 +47,25 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 public interface CmdActor extends CommandSender
 {
+    @Override
     default @NotNull PermissionAttachment addAttachment(@NotNull Plugin plugin)
     {
         return getSender().addAttachment(plugin);
     }
 
+    @Override
     default  @NotNull PermissionAttachment addAttachment(@NotNull Plugin plugin, @NotNull String s, boolean b)
     {
         return getSender().addAttachment(plugin, s, b);
     }
 
+    @Override
     default @Nullable PermissionAttachment addAttachment(@NotNull Plugin plugin, @NotNull String s, boolean b, int i)
     {
         return getSender().addAttachment(plugin, s, b, i);
     }
 
+    @Override
     default  @Nullable PermissionAttachment addAttachment(@NotNull Plugin plugin, int i)
     {
         return getSender().addAttachment(plugin, i);
@@ -116,6 +120,7 @@ public interface CmdActor extends CommandSender
 
     String getCommandName();
 
+    @Override
     default  @NotNull Set<PermissionAttachmentInfo> getEffectivePermissions()
     {
         return getSender().getEffectivePermissions();
@@ -182,11 +187,13 @@ public interface CmdActor extends CommandSender
         return PlayerUtil.giveItem(getPlayer(), item, allOrNothing);
     }
 
+    @Override
     default boolean hasPermission(@NotNull String permission)
     {
         return getSender().hasPermission(permission);
     }
 
+    @Override
     default boolean hasPermission(@NotNull Permission permission)
     {
         return getSender().hasPermission(permission);
@@ -233,26 +240,31 @@ public interface CmdActor extends CommandSender
         ShopPlugin.logWarning(String.format(format, args));
     }
 
+    @Override
     default void recalculatePermissions()
     {
         getSender().recalculatePermissions();
     }
 
+    @Override
     default void removeAttachment(@NotNull PermissionAttachment permissionAttachment)
     {
         getSender().removeAttachment(permissionAttachment);
     }
 
+    @Override
     default void sendMessage(@Nullable UUID sender, @NotNull String message)
     {
         getSender().sendMessage(sender, message);
     }
 
+    @Override
     default void sendMessage(@Nullable UUID sender, @NotNull String... messages)
     {
         getSender().sendMessage(sender, messages);
     }
 
+    @Override
     default @NotNull Spigot spigot()
     {
         return getSender().spigot();
