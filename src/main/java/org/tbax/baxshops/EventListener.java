@@ -35,6 +35,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerSignOpenEvent;
 import org.bukkit.inventory.ItemStack;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.CommandWarningException;
@@ -271,6 +272,15 @@ public class EventListener implements Listener
                 }
                 ShopPlugin.clearSelection(event.getPlayer());
             }
+        }
+    }
+
+    @EventHandler
+    public void onSignOpen(PlayerSignOpenEvent event)
+    {
+        BaxShop shop = ShopPlugin.getShop(event.getSign().getLocation().getBlock().getLocation());
+        if (shop != null) {
+            event.setCancelled(true);
         }
     }
 }
