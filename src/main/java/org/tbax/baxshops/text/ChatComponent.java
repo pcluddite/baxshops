@@ -22,6 +22,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -36,8 +39,8 @@ import java.util.*;
 @SuppressWarnings({ "unused", "UnusedReturnValue" })
 public final class ChatComponent
 {
-    private List<ChatComponent> siblings = new ArrayList<>();
-    private Set<ChatTextStyle> styles = new HashSet<>();
+    private final List<ChatComponent> siblings = new ArrayList<>();
+    private final Set<ChatTextStyle> styles = new HashSet<>();
     private TextColor color = null;
     private ClickEvent clickEvent = null;
     private HoverEvent hoverEvent = null;
@@ -304,6 +307,21 @@ public final class ChatComponent
             obj.add("extra", array);
         }
         return obj;
+    }
+
+    public Component toKyoriComponent()
+    {
+        Component component = Component.text(text);
+        if (color != null) {
+            component = component.color(NamedTextColor.NAMES.value(color.name()));
+        }
+        for (ChatTextStyle style : styles) {
+            component = component.style(Style.style(TextDecoration.valueOf(style.name())));
+        }
+        for (ChatComponent sib : siblings) {
+            component = component.append(sib.toKyoriComponent());
+        }
+        return component;
     }
 
     @Override
