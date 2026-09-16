@@ -20,11 +20,10 @@ package org.tbax.baxshops.nms;
 
 import org.bukkit.Bukkit;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class RuntimeObject
+public final class RuntimeObject
 {
     public static final String CRAFTBUKKIT_PACKAGE;
 
@@ -33,43 +32,16 @@ public abstract class RuntimeObject
         String packageName = "org.bukkit.craftbukkit";
         String runtimePackageName = Bukkit.getServer().getClass().getPackage().getName();
         if (runtimePackageName.equals(packageName)) {
+            // version is not part of package name
             CRAFTBUKKIT_PACKAGE = packageName;
         }
         else {
+            // version is part of package name
             CRAFTBUKKIT_PACKAGE = packageName + "." + runtimePackageName.split("\\.")[3];
         }
     }
 
-    private final static Map<String, Class<?>> classCache = new HashMap<>();
-
-    public abstract String __pkg_name();
-
-    public String __class_name()
-    {
-        Class<? extends RuntimeObject> cls = getClass();
-        return cls.getName().substring(cls.getName().lastIndexOf('.') + 1);
-    }
-
-    public final Class<?> __class() throws ReflectiveOperationException
-    {
-        return __class(__pkg_name() + "." + __class_name());
-    }
-
-    public static Class<?> __class(String className) throws ReflectiveOperationException
-    {
-        Class<?> cls = classCache.get(className);
-        if (cls == null) {
-            classCache.put(className, cls = Class.forName(className));
-        }
-        return cls;
-    }
-
-    protected final Method __method(String name, Class<?>... parameterTypes) throws ReflectiveOperationException
-    {
-        return __class().getDeclaredMethod(name, parameterTypes);
-    }
-
-    public abstract Object __object() throws ReflectiveOperationException;
+    private static final Map<String, Class<?>> CLASS_CACHE = new HashMap<>();
 
     public static Class<?> getCraftbukkitClass(String className) throws ReflectiveOperationException
     {
@@ -78,6 +50,10 @@ public abstract class RuntimeObject
 
     public static Class<?> getRuntimeClass(String className) throws ReflectiveOperationException
     {
-        return __class(className);
+        Class<?> cls = CLASS_CACHE.get(className);
+        if (cls == null) {
+            CLASS_CACHE.put(className, cls = Class.forName(className));
+        }
+        return cls;
     }
 }
