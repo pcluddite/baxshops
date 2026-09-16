@@ -28,6 +28,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.ShopPlugin;
+import org.tbax.baxshops.nms.RuntimeObject;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -225,9 +226,10 @@ public final class ChatComponent
     {
         try {
             Component component = GsonComponentSerializer.gson().deserialize(toString());
-            Method sendMessage = Player.class.getMethod("sendMessage", Class.forName("net.kyori.adventure.text.Component"));
+            Method sendMessage = Player.class.getMethod("sendMessage", RuntimeObject.getRuntimeClass("net.kyori.adventure.text.Component"));
             sendMessage.invoke(player, component);
-        } catch (ReflectiveOperationException e) {
+        }
+        catch (ReflectiveOperationException e) {
             ShopPlugin.logSevere("Reflection error at " +  e.getMessage());
             player.sendMessage(toPlainString());
         }
