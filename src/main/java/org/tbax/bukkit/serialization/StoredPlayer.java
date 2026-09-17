@@ -18,6 +18,7 @@
  */
 package org.tbax.bukkit.serialization;
 
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -25,13 +26,13 @@ import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tbax.baxshops.ShopPlugin;
+import org.tbax.baxshops.serialization.BaxConfig;
+import org.tbax.baxshops.serialization.UpgradeableSerializable;
+import org.tbax.baxshops.serialization.UpgradeableSerialization;
 import org.tbax.baxshops.versioning.LegacyOfflinePlayer;
 import org.tbax.bukkit.notification.Notification;
 import org.tbax.bukkit.serialization.annotations.SerializeNonNull;
 import org.tbax.bukkit.serialization.annotations.SerializedAs;
-import org.tbax.baxshops.serialization.BaxConfig;
-import org.tbax.baxshops.serialization.UpgradeableSerializable;
-import org.tbax.baxshops.serialization.UpgradeableSerialization;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -141,6 +142,12 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
     }
 
     @Override
+    public boolean isConnected()
+    {
+        return getOfflinePlayer().isOnline();
+    }
+
+    @Override
     public String getName()
     {
         if (getOfflinePlayer().isOnline()) {
@@ -162,7 +169,7 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
     }
 
     @Override
-    public @NotNull PlayerProfile getPlayerProfile()
+    public com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile()
     {
         return getOfflinePlayer().getPlayerProfile();
     }
@@ -270,9 +277,27 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
     }
 
     @Override
+    public long getLastLogin()
+    {
+        return getOfflinePlayer().getLastLogin();
+    }
+
+    @Override
+    public long getLastSeen()
+    {
+        return getOfflinePlayer().getLastSeen();
+    }
+
+    @Override
     public @Nullable Location getRespawnLocation()
     {
         return getOfflinePlayer().getRespawnLocation();
+    }
+
+    @Override
+    public @org.jspecify.annotations.Nullable Location getRespawnLocation(boolean loadLocationAndValidate)
+    {
+        return getOfflinePlayer().getRespawnLocation(loadLocationAndValidate);
     }
 
     @Override
@@ -393,6 +418,12 @@ public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSeri
     public @Nullable Location getLocation()
     {
         return getOfflinePlayer().getLocation();
+    }
+
+    @Override
+    public PersistentDataContainerView getPersistentDataContainer()
+    {
+        return getOfflinePlayer().getPersistentDataContainer();
     }
 
     @Override

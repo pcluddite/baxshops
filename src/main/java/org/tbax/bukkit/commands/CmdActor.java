@@ -18,6 +18,11 @@
  */
 package org.tbax.bukkit.commands;
 
+import net.kyori.adventure.chat.ChatType;
+import net.kyori.adventure.chat.SignedMessage;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -32,13 +37,14 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import org.tbax.baxshops.PlayerUtil;
+import org.tbax.baxshops.ShopPlugin;
+import org.tbax.baxshops.versioning.LegacyPlayerUtil;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.CommandMessageException;
 import org.tbax.bukkit.errors.CommandWarningException;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.ShopPlugin;
-import org.tbax.baxshops.versioning.LegacyPlayerUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -335,5 +341,61 @@ public interface CmdActor extends CommandSender
     default boolean tryGiveItem(ItemStack stack)
     {
         return PlayerUtil.tryGiveItem(getPlayer(), stack);
+    }
+
+    @Override
+    default @NotNull Component name()
+    {
+        return null;
+    }
+
+    @Override
+    default void sendMessage(@NotNull Component message)
+    {
+        getSender().sendMessage(message);
+    }
+
+    @Override
+    default void sendMessage(@NotNull Component message, ChatType.@NotNull Bound boundChatType)
+    {
+        getSender().sendMessage(message, boundChatType);
+    }
+
+    @Override
+    default void sendMessage(@NotNull SignedMessage signedMessage, ChatType.@NotNull Bound boundChatType)
+    {
+        getSender().sendMessage(signedMessage, boundChatType);
+    }
+
+    @Override
+    default void sendRichMessage(@NotNull String message)
+    {
+        getSender().sendRichMessage(message);
+    }
+
+    @Override
+    default void sendRichMessage(@NotNull String message, @NotNull TagResolver... resolvers)
+    {
+        getSender().sendRichMessage(message, resolvers);
+    }
+
+    @Override
+    default void sendPlainMessage(@NotNull String message)
+    {
+        getSender().sendPlainMessage(message);
+    }
+
+    @Override
+    @Deprecated
+    default void sendMessage(@NotNull BaseComponent component)
+    {
+        getSender().sendMessage(component);
+    }
+
+    @Override
+    @Deprecated
+    default void sendMessage(@NonNull @NotNull BaseComponent... components)
+    {
+        getSender().sendMessage(components);
     }
 }
