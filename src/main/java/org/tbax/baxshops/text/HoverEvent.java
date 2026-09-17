@@ -26,6 +26,9 @@ import org.tbax.baxshops.items.ItemUtil;
 
 public final class HoverEvent
 {
+    private static final String EVENT_SHOW_ITEM = "show_item";
+    private static final String EVENT_SHOW_TEXT = "show_text";
+
     private String event;
     private JsonElement value;
     private JsonObject contents;
@@ -84,16 +87,16 @@ public final class HoverEvent
 
     public static HoverEvent showText(String text)
     {
-        return new HoverEvent("show_text", text);
+        return new HoverEvent(EVENT_SHOW_TEXT, text);
     }
 
     public static HoverEvent showText(ChatComponent text)
     {
-        return new HoverEvent("show_text", text);
+        return new HoverEvent(EVENT_SHOW_TEXT, text);
     }
 
     public static HoverEvent showItem(ItemStack stack)
     {
-        return new HoverEvent("show_item", ItemUtil.getNBTTag(stack));
+        return new HoverEvent(EVENT_SHOW_ITEM, ItemUtil.getNBTTag(stack));
     }
 }

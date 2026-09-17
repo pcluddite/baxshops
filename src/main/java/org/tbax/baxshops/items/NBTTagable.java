@@ -21,6 +21,7 @@ package org.tbax.baxshops.items;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -53,17 +54,13 @@ public final class NBTTagable
 
     public JsonElement getEnchantElement()
     {
-        if (stack.getEnchantments() != null && !stack.getEnchantments().isEmpty()) {
-            JsonArray enchantArray = new JsonArray();
-            for (Map.Entry<Enchantment, Integer> enchants : stack.getEnchantments().entrySet()) {
-                JsonObject enchantMap = new JsonObject();
-                enchantMap.addProperty("id", enchants.getKey().getKey().toString());
-                enchantMap.addProperty("lvl", enchants.getValue());
-                enchantArray.add(enchantMap);
-            }
-            return enchantArray;
+        if (stack.getEnchantments() == null || stack.getEnchantments().isEmpty())
+            return null;
+        JsonObject enchantObject = new JsonObject();
+        for (Map.Entry<Enchantment, Integer> enchants : stack.getEnchantments().entrySet()) {
+            enchantObject.addProperty(enchants.getKey().getKey().toString(), enchants.getValue());
         }
-        return null;
+        return enchantObject;
     }
 
     public JsonElement getLoreElement()
@@ -154,11 +151,10 @@ public final class NBTTagable
             }
         }
 
-        if (tag.size() > 0) {
+        if (tag.isEmpty())
             return tag;
-        } else {
-            return null;
-        }
+
+        return null;
     }
 
     public JsonElement getCustomPotionEffectsElement()
@@ -180,6 +176,18 @@ public final class NBTTagable
         return null;
     }
 
+    public JsonElement getComponentsElement()
+    {
+        JsonObject object = new JsonObject();
+        JsonElement enchantObject = getEnchantElement();
+        if (enchantObject != null) {
+            object.add(NamespacedKey.minecraft("enchantments").toString(), enchantObject);
+        }
+        if (object.isEmpty())
+            return null;
+        return object;
+    }
+
     public JsonElement asJsonElement()
     {
         return asJsonObject();
@@ -190,9 +198,9 @@ public final class NBTTagable
         JsonObject object = new JsonObject();
         object.addProperty("id", stack.getType().getKey().toString());
         object.addProperty("count", stack.getAmount());
-        JsonElement tag = getTagElement();
-        if (tag != null) {
-            object.addProperty("nbt", tag.toString());
+        JsonElement components = getComponentsElement();
+        if (components != null) {
+            object.add("components", components);
         }
         return object;
     }
