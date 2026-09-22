@@ -26,8 +26,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionEffect;
 
 import java.util.Map;
 
@@ -106,72 +104,12 @@ public final class NBTTagable
         }
     }
 
-    public JsonElement getTagElement()
+    public JsonElement getPotionContents()
     {
-        JsonObject tag = new JsonObject();
-        JsonElement enchantElement = getEnchantElement();
-        if (enchantElement != null) {
-            tag.add("Enchantments", enchantElement);
-        }
-        JsonElement displayElement = getDisplayElement();
-        if (displayElement != null) {
-            tag.add("display", displayElement);
-        }
-        if (stack.getType().getMaxDurability() > 0) {
-            tag.addProperty("Damage", ItemUtil.getDurability(stack));
-        }
-
-        if (itemMeta instanceof PotionMeta) {
-            PotionMeta potionMeta = (PotionMeta)itemMeta;
-            PotionData potionData = potionMeta.getBasePotionData();
-            PotionInfo potionInfo = ItemUtil.getNbtPotionInfo(potionMeta.getBasePotionData().getType());
-
-            String name;
-            if (potionInfo == null) {
-                name = potionData.getType().name().toLowerCase();
-            }
-            else if (potionData.isExtended()) {
-                name = potionInfo.getExtendedNbtName();
-            }
-            else if (potionData.isUpgraded()) {
-                name = potionInfo.getUpgradedNbtName();
-            }
-            else {
-                name = potionInfo.getNbtName();
-            }
-
-            tag.addProperty("Potion", "minecraft:" + name);
-            JsonElement customPotionEffectsElement = getCustomPotionEffectsElement();
-            if (customPotionEffectsElement != null) {
-                tag.add("CustomPotionEffects", customPotionEffectsElement);
-            }
-
-            if (potionMeta.hasColor()) {
-                tag.addProperty("CustomPotionColor", potionMeta.getColor().asRGB());
-            }
-        }
-
-        if (tag.isEmpty())
-            return tag;
-
-        return null;
-    }
-
-    public JsonElement getCustomPotionEffectsElement()
-    {
-        if (itemMeta instanceof PotionMeta) {
-            PotionMeta potionMeta = (PotionMeta)itemMeta;
-            if (potionMeta.getCustomEffects() != null && !potionMeta.getCustomEffects().isEmpty()) {
-                JsonArray customPotionEffectElement = new JsonArray();
-                for (PotionEffect effect : potionMeta.getCustomEffects()) {
-                    JsonObject effectElement = new JsonObject();
-                    effectElement.addProperty("Id", effect.getType().getName());
-                    effectElement.addProperty("Amplifier", effect.getAmplifier());
-                    effectElement.addProperty("Duration", effect.getDuration());
-                    customPotionEffectElement.add(effectElement);
-                }
-                return customPotionEffectElement;
-            }
+        if (itemMeta instanceof PotionMeta potionMeta) {
+            JsonObject potionObject = new JsonObject();
+            potionObject.addProperty("potion", potionMeta.getBasePotionType().getKey().getKey());
+            return potionObject;
         }
         return null;
     }
@@ -182,6 +120,10 @@ public final class NBTTagable
         JsonElement enchantObject = getEnchantElement();
         if (enchantObject != null) {
             object.add(NamespacedKey.minecraft("enchantments").toString(), enchantObject);
+        }
+        JsonElement potionObject = getPotionContents();
+        if (potionObject != null) {
+            object.add(NamespacedKey.minecraft("potion_contents").toString(), potionObject);
         }
         if (object.isEmpty())
             return null;
