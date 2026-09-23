@@ -1,7 +1,7 @@
 BaxShops
 =========
 
-BaxShops is a shop plugin for Bukkit, based on and intended to be the ongoing replacement for [SwornShops](https://github.com/nathan/shops)
+BaxShops is a shop plugin for [PaperMC](https://papermc.io), based on and intended to be the ongoing replacement for [SwornShops](https://github.com/nathan/shops)
 which has since been deleted. The original project can still be found [here](https://github.com/pcluddite/nathan-shops).
 
 **FEATURES**
