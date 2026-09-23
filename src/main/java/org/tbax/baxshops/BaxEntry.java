@@ -382,7 +382,11 @@ public class BaxEntry implements UpgradeableSerializable
 
         if (canBuy()) {
             component = component.appendSpace();
-            Component buyComponent = Component.text(Format.retailPrice(retailPrice))
+            String price = Format.retailPrice(retailPrice);
+            if (strikethrough) {
+                price = Format.stripColor(price);
+            }
+            Component buyComponent = Component.text(price)
                     .clickEvent(ClickEvent.suggestCommand("/buy " + index + " "))
                     .hoverEvent(HoverEvent.showText(Component.text("Purchase for " + Format.money(retailPrice))));
             component = component.append(buyComponent);
@@ -390,7 +394,11 @@ public class BaxEntry implements UpgradeableSerializable
 
         if (canSell()) {
             component = component.appendSpace();
-            Component sellComponent = Component.text(Format.refundPrice(refundPrice))
+            String price = Format.refundPrice(refundPrice);
+            if (strikethrough) {
+                price = Format.stripColor(price);
+            }
+            Component sellComponent = Component.text(price)
                     .clickEvent(ClickEvent.suggestCommand("/shop sellfrominventory " + index + " "))
                     .hoverEvent(HoverEvent.showText(Component.text("Sell for " + Format.money(refundPrice))));
             component = component.append(sellComponent);
