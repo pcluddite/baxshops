@@ -27,7 +27,9 @@ import org.tbax.baxshops.text.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Methods for formatting strings
@@ -57,143 +59,171 @@ public final class Format
         return DATE_FORMAT.format(dt);
     }
 
+    @Deprecated
     public static @NotNull String money(@NotNull String in)
     {
         return reset(ChatColor.GREEN + in);
     }
-    
+
+    @Deprecated
     public static @NotNull String money(double d)
     {
         return money(ShopPlugin.getEconomy().format(d));
     }
-    
+
+    @Deprecated
     public static @NotNull String money2(@NotNull String in)
     {
         return reset(ChatColor.DARK_GREEN + in);
     }
-    
+
+    @Deprecated
     public static @NotNull String money2(double d)
     {
         return money2(ShopPlugin.getEconomy().format(d));
     }
-    
+
+    @Deprecated
     public static @NotNull String number(@NotNull String n)
     {
         return reset(ChatColor.AQUA + n);
     }
-    
+
+    @Deprecated
     public static @NotNull String number(int n)
     {
         return number(Integer.toString(n));
     }
-    
+
+    @Deprecated
     public static @NotNull String error(@NotNull String err)
     {
         return reset(ChatColor.RED + err);
     }
 
+    @Deprecated
     public static @NotNull String warning(@NotNull String msg)
     {
         return reset(ChatColor.GOLD + msg);
     }
-    
+
+    @Deprecated
     public static @NotNull String location(@NotNull String loc)
     {
         return reset(ChatColor.GOLD + loc);
     }
-    
+
+    @Deprecated
     public static @NotNull String location(@NotNull Location loc)
     {
         return location(String.format("(%d,%d,%d)", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) + ChatColor.RESET;
     }
-    
+
+    @Deprecated
     public static @NotNull String itemName(int amount, @NotNull String name)
     {
         return itemName(String.format("%d %s", amount, name));
     }
-    
+
+    @Deprecated
     public static @NotNull String itemName(@NotNull String name)
     {
         return reset(ChatColor.GREEN + name);
     }
-    
+
+    @Deprecated
     public static @NotNull String username(@NotNull UUID uuid)
     {
         return username(ShopPlugin.getOfflinePlayer(uuid).getName());
     }
 
+    @Deprecated
     public static @NotNull String username2(@NotNull UUID uuid)
     {
         return username2(ShopPlugin.getOfflinePlayer(uuid).getName());
     }
 
+    @Deprecated
     public static @NotNull String username(@NotNull String name)
     {
         return reset(ChatColor.DARK_BLUE + name);
     }
-    
+
+    @Deprecated
     public static @NotNull String username2(@NotNull String name)
     {
         return reset(ChatColor.LIGHT_PURPLE + name);
     }
-    
+
+    @Deprecated
     public static @NotNull String command(@NotNull String cmd)
     {
         int space = cmd.indexOf(' ');
         if (space < 0) return reset(ChatColor.GOLD + cmd);
         return reset(ChatColor.GOLD + cmd.substring(0, space) + ChatColor.GRAY + cmd.substring(space));
     }
-    
+
+    @Deprecated
     public static @NotNull String retailPrice(@NotNull String price)
     {
         return reset(ChatColor.DARK_GREEN + price);
     }
-    
+
+    @Deprecated
     public static @NotNull String retailPrice(double price)
     {
         return retailPrice(String.format("(%s)", ShopPlugin.getEconomy().format(price)));
     }
-    
+
+    @Deprecated
     public static @NotNull String refundPrice(@NotNull String price)
     {
         return reset(ChatColor.BLUE + price);
     }
-    
+
+    @Deprecated
     public static @NotNull String refundPrice(double price)
     {
         return refundPrice(String.format("(%s)", ShopPlugin.getEconomy().format(price)));
     }
-    
+
+    @Deprecated
     public static @NotNull String enchantments(@NotNull String enchant)
     {
         return reset(ChatColor.DARK_PURPLE + enchant);
     }
-    
+
+    @Deprecated
     public static @NotNull String bullet(@NotNull String b)
     {
         return reset(ChatColor.GRAY + b);
     }
-    
+
+    @Deprecated
     public static @NotNull String bullet(int b)
     {
         return bullet(Integer.toString(b));
     }
-    
+
+    @Deprecated
     public static @NotNull String listname(@NotNull String name)
     {
         return reset(ChatColor.WHITE + name);
     }
-    
+
+    @Deprecated
     public static @NotNull String flag(@NotNull String flag)
     {
         return reset(ChatColor.YELLOW + flag);
     }
-    
+
+    @Deprecated
     public static @NotNull String keyword(@NotNull String word)
     {
         return reset(ChatColor.GREEN + word);
     }
-    
+
+    @Deprecated
     private static @NotNull String reset(@NotNull String format)
     {
         return format + ChatColor.RESET;
@@ -313,7 +343,9 @@ public final class Format
      * Generates a chat header with the given title
      * @param title the text in the header
      * @return the chat header
+     * @deprecated Use {@link FormatText#header(String)}
      */
+    @Deprecated
     public static @NotNull String header(String title)
     {
         return ChatColor.GRAY.toString() +
@@ -325,6 +357,7 @@ public final class Format
             ChatColor.RESET;
     }
 
+    @Deprecated
     public static @NotNull ChatComponent header(int page, int maxPages, String command)
     {
         ChatComponent text = ChatComponent.of("", TextColor.GRAY);
