@@ -24,8 +24,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
-import org.tbax.baxshops.BaxShop;
-import org.tbax.baxshops.Format;
 import org.tbax.baxshops.text.*;
 
 /**
@@ -119,7 +117,7 @@ public final class ShopSelection
                     stop = (page + 1) * ITEMS_PER_PAGE,
                     max = Math.min(stop, shop.size());
             for (; i < max; i++) {
-                shop.getEntry(i).toChatComponent(i + 1, shop.hasFlagInfinite()).sendTo(sender);
+                sender.sendMessage(shop.getEntry(i).toChatComponent(i + 1, shop.hasFlagInfinite()));
             }
             for (; i < stop; i++) {
                 sender.sendMessage("");
