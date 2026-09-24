@@ -35,7 +35,12 @@ public class FormatText
 {
     public static @NotNull Component money(@NotNull String amount)
     {
-        return Component.text(amount, NamedTextColor.GREEN);
+        return money(Component.text(amount));
+    }
+
+    public static @NotNull Component money(@NotNull Component amount)
+    {
+        return amount.color(NamedTextColor.GREEN);
     }
 
     public static @NotNull Component money(double amount)
@@ -45,7 +50,12 @@ public class FormatText
 
     public static @NotNull Component money2(@NotNull String amount)
     {
-        return Component.text(amount, NamedTextColor.DARK_GREEN);
+        return money2(Component.text(amount));
+    }
+
+    public static @NotNull Component money2(@NotNull Component amount)
+    {
+        return amount.color(NamedTextColor.DARK_GREEN);
     }
 
     public static @NotNull Component money2(double amount)
@@ -55,7 +65,12 @@ public class FormatText
 
     public static @NotNull Component number(@NotNull String value)
     {
-        return Component.text(value, NamedTextColor.AQUA);
+        return number(Component.text(value));
+    }
+
+    public static @NotNull Component number(Component value)
+    {
+        return value.color(NamedTextColor.AQUA);
     }
 
     public static @NotNull Component number(int value)
@@ -65,17 +80,32 @@ public class FormatText
 
     public static @NotNull Component error(@NotNull String message)
     {
-        return Component.text(message, NamedTextColor.RED);
+        return error(Component.text(message));
+    }
+
+    public static @NotNull Component error(@NotNull Component message)
+    {
+        return message.color(NamedTextColor.RED);
     }
 
     public static @NotNull Component warning(@NotNull String message)
     {
-        return Component.text(message, NamedTextColor.GOLD);
+        return warning(Component.text(message));
+    }
+
+    public static @NotNull Component warning(@NotNull Component message)
+    {
+        return message.color(NamedTextColor.GOLD);
     }
 
     public static @NotNull Component location(@NotNull String location)
     {
-        return Component.text(location, NamedTextColor.GOLD);
+        return location(Component.text(location));
+    }
+
+    public static @NotNull Component location(@NotNull Component location)
+    {
+        return location.color(NamedTextColor.GOLD);
     }
 
     public static @NotNull Component location(@NotNull Location loc)
@@ -90,7 +120,12 @@ public class FormatText
 
     public static @NotNull Component itemName(@NotNull String name)
     {
-        return Component.text(name, NamedTextColor.GREEN);
+        return itemName(Component.text(name));
+    }
+
+    public static @NotNull Component itemName(@NotNull Component name)
+    {
+        return name.color(NamedTextColor.GREEN);
     }
 
     public static @NotNull Component username(@NotNull UUID uuid)
@@ -100,7 +135,12 @@ public class FormatText
 
     public static @NotNull Component username(@NotNull String name)
     {
-        return Component.text(name, NamedTextColor.DARK_BLUE);
+        return username(Component.text(name));
+    }
+
+    public static @NotNull Component username(@NotNull Component name)
+    {
+        return name.color(NamedTextColor.DARK_BLUE);
     }
 
     public static @NotNull Component username2(@NotNull UUID uuid)
@@ -110,7 +150,12 @@ public class FormatText
 
     public static @NotNull Component username2(@NotNull String name)
     {
-        return Component.text(name, NamedTextColor.DARK_PURPLE);
+        return username2(Component.text(name));
+    }
+
+    public static @NotNull Component username2(@NotNull Component name)
+    {
+        return name.color(NamedTextColor.DARK_PURPLE);
     }
 
     public static @NotNull Component command(@NotNull String command)
@@ -124,7 +169,12 @@ public class FormatText
 
     public static @NotNull Component retailPrice(@NotNull String price)
     {
-        return Component.text(price, NamedTextColor.DARK_GREEN);
+        return retailPrice(Component.text(price));
+    }
+
+    public static @NotNull Component retailPrice(@NotNull Component price)
+    {
+        return price.color(NamedTextColor.DARK_GREEN);
     }
 
     public static @NotNull Component retailPrice(double price)
@@ -134,7 +184,12 @@ public class FormatText
 
     public static @NotNull Component refundPrice(@NotNull String price)
     {
-        return Component.text(price, NamedTextColor.BLUE);
+        return refundPrice(Component.text(price));
+    }
+
+    public static @NotNull Component refundPrice(@NotNull Component price)
+    {
+        return price.color(NamedTextColor.BLUE);
     }
 
     public static @NotNull Component refundPrice(double price)
@@ -144,12 +199,22 @@ public class FormatText
 
     public static @NotNull Component enchantments(@NotNull String enchant)
     {
-        return Component.text(enchant, NamedTextColor.DARK_PURPLE);
+        return enchantments(Component.text(enchant));
+    }
+
+    public static @NotNull Component enchantments(@NotNull Component enchant)
+    {
+        return enchant.color(NamedTextColor.DARK_PURPLE);
     }
 
     public static @NotNull Component bullet(@NotNull String b)
     {
-        return Component.text(b, NamedTextColor.GRAY);
+        return bullet(Component.text(b));
+    }
+
+    public static @NotNull Component bullet(@NotNull Component b)
+    {
+        return b.color(NamedTextColor.GRAY);
     }
 
     public static @NotNull Component bullet(int b)
@@ -159,22 +224,42 @@ public class FormatText
 
     public static @NotNull Component listname(@NotNull String name)
     {
-        return Component.text(name, NamedTextColor.WHITE);
+        return listname(Component.text(name));
+    }
+
+    public static @NotNull Component listname(@NotNull Component name)
+    {
+        return name.color(NamedTextColor.WHITE);
     }
 
     public static @NotNull Component flag(@NotNull String flag)
     {
-        return Component.text(flag, NamedTextColor.YELLOW);
+        return flag(Component.text(flag));
+    }
+
+    public static @NotNull Component flag(@NotNull Component flag)
+    {
+        return flag.color(NamedTextColor.YELLOW);
     }
 
     public static @NotNull Component keyword(@NotNull String word)
     {
-        return Component.text(word, NamedTextColor.GREEN);
+        return keyword(Component.text(word));
+    }
+
+    public static @NotNull Component keyword(@NotNull Component word)
+    {
+        return word.color(NamedTextColor.GREEN);
     }
 
     public static @NotNull Component strikethrough(@NotNull String text)
     {
-        return Component.text(text, NamedTextColor.RED, TextDecoration.STRIKETHROUGH);
+        return strikethrough(Component.text(text));
+    }
+
+    public static @NotNull Component strikethrough(@NotNull Component text)
+    {
+        return text.color(NamedTextColor.RED).decorate(TextDecoration.STRIKETHROUGH);
     }
 
     /**
