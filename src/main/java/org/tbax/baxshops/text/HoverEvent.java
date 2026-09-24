@@ -21,12 +21,9 @@ package org.tbax.baxshops.text;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.bukkit.inventory.ItemStack;
-import org.tbax.baxshops.items.ItemUtil;
 
 public final class HoverEvent
 {
-    private static final String EVENT_SHOW_ITEM = "show_item";
     private static final String EVENT_SHOW_TEXT = "show_text";
 
     private String event;
@@ -93,10 +90,5 @@ public final class HoverEvent
     public static HoverEvent showText(ChatComponent text)
     {
         return new HoverEvent(EVENT_SHOW_TEXT, text);
-    }
-
-    public static HoverEvent showItem(ItemStack stack)
-    {
-        return new HoverEvent(EVENT_SHOW_ITEM, ItemUtil.getNBTTag(stack));
     }
 }

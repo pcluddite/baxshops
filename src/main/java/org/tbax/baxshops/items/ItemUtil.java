@@ -18,7 +18,6 @@
  */
 package org.tbax.baxshops.items;
 
-import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -507,11 +506,6 @@ public final class ItemUtil
     public static void setSignFacing(Block block, BlockFace face)
     {
         ((Sign)block.getBlockData()).setRotation(face);
-    }
-
-    public static JsonObject getNBTTag(ItemStack stack)
-    {
-        return new NBTTagable(stack).asJsonObject();
     }
 
     public static Component getPotionInfo(ItemStack item)
