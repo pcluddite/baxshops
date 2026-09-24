@@ -19,6 +19,7 @@
 package org.tbax.baxshops.items;
 
 import com.google.gson.JsonObject;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,10 +36,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
-import org.tbax.baxshops.BaxEntry;
-import org.tbax.baxshops.BaxShop;
-import org.tbax.baxshops.Format;
-import org.tbax.baxshops.ShopPlugin;
+import org.tbax.baxshops.*;
 import org.tbax.baxshops.nms.RuntimeObject;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.errors.PrematureAbortException;
@@ -550,19 +548,19 @@ public final class ItemUtil
         return potions.get(type);
     }
 
-    public static String getPotionInfo(ItemStack item)
+    public static Component getPotionInfo(ItemStack item)
     {
         ItemMeta meta = item.getItemMeta();
-        if (meta instanceof PotionMeta) {
-            PotionData data = ((PotionMeta)meta).getBasePotionData();
+        if (meta instanceof PotionMeta potionMeta) {
+            PotionData data = potionMeta.getBasePotionData();
             if (data.isExtended()) {
-                return Format.enchantments("(Extended)");
+                return FormatText.enchantments("(Extended)");
             }
             else if (data.isUpgraded()) {
-                return Format.enchantments("II");
+                return FormatText.enchantments("II");
             }
         }
-        return "";
+        return null;
     }
 
     public static String[] getSignLines(CmdActor actor) throws PrematureAbortException

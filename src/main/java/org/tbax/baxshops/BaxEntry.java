@@ -359,13 +359,13 @@ public class BaxEntry implements UpgradeableSerializable
         }
         component = component.append(name);
 
-        String potionInfo = ItemUtil.getPotionInfo(getItemStack());
-        if (!potionInfo.isEmpty()) {
-            potionInfo = " " + potionInfo;
+        Component potionInfo = ItemUtil.getPotionInfo(getItemStack());
+        if (potionInfo != null) {
+            component = component.appendSpace();
             if (strikethrough) {
-                potionInfo = Format.stripColor(potionInfo);
+                potionInfo = FormatText.strikethrough(potionInfo);
             }
-            component = component.append(Component.text(potionInfo));
+            component = component.append(potionInfo);
         }
 
         if (stack.getType().getMaxDurability() > 0 && getDurability() > 0) {
