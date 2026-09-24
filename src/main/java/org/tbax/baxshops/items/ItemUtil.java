@@ -34,7 +34,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
 import org.tbax.baxshops.nms.RuntimeObject;
@@ -78,7 +77,6 @@ public final class ItemUtil
      * A list of enchantment names
      */
     private static final Map<Enchantment, Enchantable> enchants = new HashMap<>();
-    private static final Map<PotionType, PotionInfo> potions = new HashMap<>();
 
     private ItemUtil()
     {
@@ -243,35 +241,6 @@ public final class ItemUtil
         }
         catch (IOException e) {
             plugin.getLogger().warning("Failed to read enchants file: " + e.toString());
-        }
-    }
-
-    /**
-     * Loads the potion names in potions.yml
-     */
-    public static void loadPotions(ShopPlugin plugin)
-    {
-        try (InputStream stream = plugin.getResource("potions.yml")) {
-            YamlConfiguration potionConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
-            List<Map<?, ?>> section = potionConfig.getMapList("potions");
-
-            for (Map<?, ?> potionMap : section) {
-                try {
-                    PotionType potionType = PotionType.valueOf((String)potionMap.get("type"));
-                    String name = (String)potionMap.get("name");
-                    String regular = (String)potionMap.get("regular");
-                    String upgraded = (String)potionMap.get("upgraded");
-                    String extended = (String)potionMap.get("extended");
-                    PotionInfo info = new PotionInfo(potionType, name, regular, upgraded, extended);
-                    potions.put(potionType, info);
-                }
-                catch (IllegalArgumentException e) {
-                    ShopPlugin.logWarning(potionMap.get("type") + " is not a potion type");
-                }
-            }
-        }
-        catch (IOException e) {
-            plugin.getLogger().warning("Failed to read potions file: " + e.toString());
         }
     }
 
@@ -541,11 +510,6 @@ public final class ItemUtil
     public static JsonObject getNBTTag(ItemStack stack)
     {
         return new NBTTagable(stack).asJsonObject();
-    }
-
-    public static PotionInfo getNbtPotionInfo(PotionType type)
-    {
-        return potions.get(type);
     }
 
     public static Component getPotionInfo(ItemStack item)

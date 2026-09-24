@@ -30,8 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.tbax.bukkit.commands.BaxCommand;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.commands.*;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.baxshops.notification.*;
@@ -41,6 +39,8 @@ import org.tbax.baxshops.serialization.StateFile;
 import org.tbax.baxshops.text.ChatComponent;
 import org.tbax.baxshops.text.ClickEvent;
 import org.tbax.baxshops.text.HoverEvent;
+import org.tbax.bukkit.commands.BaxCommand;
+import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.bukkit.notification.Claimable;
 import org.tbax.bukkit.notification.GeneralNotification;
 import org.tbax.bukkit.notification.Notification;
@@ -452,7 +452,6 @@ public final class ShopPlugin extends JavaPlugin
 
         loadConfigurationSerializable();
         ItemUtil.loadEnchants(this);
-        ItemUtil.loadPotions(this);
 
         saveDefaultConfig();
         try {
