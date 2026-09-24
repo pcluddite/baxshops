@@ -325,9 +325,9 @@ public class BaxEntry implements UpgradeableSerializable
         boolean strikethrough = false;
 
         if (infinite) {
-            component = Component.text(Format.bullet(index) + ". ", NamedTextColor.GRAY);
+            component = FormatText.bullet(index + ".").appendSpace();
         }
-        else if (getAmount() <= 0) {
+        else if (getAmount() < 1) {
             component = Component.text(index + " (0) ", NamedTextColor.RED, TextDecoration.STRIKETHROUGH);
             strikethrough = true;
         }
@@ -335,33 +335,29 @@ public class BaxEntry implements UpgradeableSerializable
             component = Component.text(index + ". (" + getAmount() + ") ", NamedTextColor.GRAY);
         }
 
+        Component name = Component.text(getName());
         if(stack.getType() == Material.ENCHANTED_BOOK && EnchantMap.isEnchanted(stack)) {
-            String text = ItemUtil.getName(this);
             if (!strikethrough) {
-                text = Format.enchantments(text);
+                name = FormatText.enchantments(name);
             }
-            Component name = Component.text(text)
-                    .hoverEvent(getItemStack().asHoverEvent())
+            name = name.hoverEvent(getItemStack().asHoverEvent())
                     .clickEvent(ClickEvent.runCommand("/shop info " + index));
-            component = component.append(name);
         }
         else {
-            String text = ItemUtil.getName(this);
             if (!strikethrough) {
-                text = Format.listname(text);
+                name = FormatText.listname(name);
             }
-            Component name = Component.text(text)
-                    .hoverEvent(getItemStack().asHoverEvent())
+            name = name.hoverEvent(getItemStack().asHoverEvent())
                     .clickEvent(ClickEvent.runCommand("/shop info " + index));
             if (EnchantMap.isEnchanted(getItemStack())) {
-                text = " (" + EnchantMap.abbreviatedListString(getItemStack()) + ")";
+                Component enchants = Component.text(" (" + EnchantMap.abbreviatedListString(getItemStack()) + ")");
                 if (!strikethrough) {
-                    text = Format.enchantments(text);
+                    enchants = FormatText.enchantments(enchants);
                 }
-                name = name.append(Component.text(text));
+                name = name.append(enchants);
             }
-            component = component.append(name);
         }
+        component = component.append(name);
 
         String potionInfo = ItemUtil.getPotionInfo(getItemStack());
         if (!potionInfo.isEmpty()) {
@@ -382,25 +378,23 @@ public class BaxEntry implements UpgradeableSerializable
 
         if (canBuy()) {
             component = component.appendSpace();
-            String price = Format.retailPrice(retailPrice);
+            Component price = FormatText.retailPrice(retailPrice);
             if (strikethrough) {
-                price = Format.stripColor(price);
+                price = FormatText.strikethrough(price);
             }
-            Component buyComponent = Component.text(price)
-                    .clickEvent(ClickEvent.suggestCommand("/buy " + index + " "))
-                    .hoverEvent(HoverEvent.showText(Component.text("Purchase for " + Format.money(retailPrice))));
+            Component buyComponent = price.clickEvent(ClickEvent.suggestCommand("/buy " + index + " "))
+                    .hoverEvent(HoverEvent.showText(Component.text("Purchase for ").append(FormatText.money(retailPrice))));
             component = component.append(buyComponent);
         }
 
         if (canSell()) {
             component = component.appendSpace();
-            String price = Format.refundPrice(refundPrice);
+            Component price = FormatText.refundPrice(refundPrice);
             if (strikethrough) {
-                price = Format.stripColor(price);
+                price = FormatText.strikethrough(price);
             }
-            Component sellComponent = Component.text(price)
-                    .clickEvent(ClickEvent.suggestCommand("/shop sellfrominventory " + index + " "))
-                    .hoverEvent(HoverEvent.showText(Component.text("Sell for " + Format.money(refundPrice))));
+            Component sellComponent = price.clickEvent(ClickEvent.suggestCommand("/shop sellfrominventory " + index + " "))
+                    .hoverEvent(HoverEvent.showText(Component.text("Sell for ").append(FormatText.money(refundPrice))));
             component = component.append(sellComponent);
         }
 
