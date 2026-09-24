@@ -320,6 +320,8 @@ public class FormatText
         boolean has_ansi = false;
         List<Component> componentList = getAllComponents(component);
         for(Component c : componentList) {
+            if (!(c instanceof TextComponent))
+                continue;
             TextColor color = c.color();
             if (color != null) {
                 sb.append((char)27);
