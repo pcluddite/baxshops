@@ -22,14 +22,12 @@ import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -158,7 +156,7 @@ public final class CmdTake extends ShopCommand
                 return shopActor.getShop().getAllItemAliases();
             }
             else if (args.size() == 3) {
-                return Arrays.asList("all", "fill", "most", "stack");
+                return Arrays.asList("all", "fill", "most", "stack", "1");
             }
         }
         return super.onTabComplete(actor, command, alias, args);
