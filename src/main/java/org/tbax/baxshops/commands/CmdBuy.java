@@ -22,19 +22,16 @@ package org.tbax.baxshops.commands;
 import org.bukkit.command.Command;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
-import org.tbax.bukkit.commands.BaxCommand;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
-import org.tbax.baxshops.ShopPlugin;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.baxshops.notification.BuyNotification;
 import org.tbax.baxshops.notification.BuyRequest;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.bukkit.MathUtil;
+import org.tbax.bukkit.commands.BaxCommand;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -194,7 +191,7 @@ public final class CmdBuy extends ShopCommand
                 return shopActor.getShop().getAllItemAliases();
             }
             else if (args.size() == 3) {
-                return Arrays.asList("all", "fill", "most", "stack");
+                return Arrays.asList("all", "fill", "most", "stack", "1");
             }
         }
         return super.onTabComplete(actor, command, alias, args);
