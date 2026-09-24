@@ -225,13 +225,13 @@ public final class ItemUtil
                 NamespacedKey key = NamespacedKey.minecraft((String)keyMap.get("key"));
                 Enchantment enchantment = Enchantment.getByKey(key);
                 if (enchantment == null) {
-                    ShopPlugin.logWarning(key.toString() + " is not an enchantment type");
+                    ShopPlugin.logWarning(key + " is not an enchantment type");
                 }
                 else {
                     String name = (String)enchantMap.get("name");
                     Object id = enchantMap.get("id");
-                    if (id instanceof Number) {
-                        enchants.put(enchantment, new Enchantable(enchantment, name, ((Number)id).intValue()));
+                    if (id instanceof Number n) {
+                        enchants.put(enchantment, new Enchantable(enchantment, name, n.intValue()));
                     }
                     else {
                         enchants.put(enchantment, new Enchantable(enchantment, name));
@@ -247,8 +247,10 @@ public final class ItemUtil
     public static Enchantable getEnchantable(Enchantment enchantment)
     {
         Enchantable enchantable = enchants.get(enchantment);
-        if (enchantable == null)
-            return new Enchantable(enchantment, Format.toFriendlyName(enchantment.getKey().getKey()));
+        if (enchantable == null) {
+            enchantable = new Enchantable(enchantment, Format.toFriendlyName(enchantment.getKey().getKey()));
+            enchants.put(enchantment, enchantable);
+        }
         return enchantable;
     }
 
