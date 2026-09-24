@@ -19,13 +19,17 @@
 package org.tbax.baxshops;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -298,5 +302,87 @@ public class FormatText
             text = text.append(Component.text(">>", NamedTextColor.DARK_GRAY));
         }
         return text;
+    }
+
+    private static @NotNull List<Component> getAllComponents(@NotNull Component component)
+    {
+        List<Component> components = new ArrayList<>();
+        components.add(component);
+        for (Component c : component.children()) {
+            components.addAll(getAllComponents(c));
+        }
+        return components;
+    }
+
+    public static @NotNull String toAnsiColor(@NotNull TextComponent component) // obnoxious method to convert minecraft message colors to ansi colors
+    {
+        StringBuilder sb = new StringBuilder();
+        boolean has_ansi = false;
+        List<Component> componentList = getAllComponents(component);
+        for(Component c : componentList) {
+            TextColor color = c.color();
+            if (color != null) {
+                sb.append((char)27);
+                sb.append("[0;");
+                if (color.equals(NamedTextColor.BLACK)) {
+                    sb.append("30");
+                }
+                else if (color.equals(NamedTextColor.DARK_BLUE)) {
+                    sb.append("34");
+                }
+                else if (color.equals(NamedTextColor.DARK_GREEN)) {
+                    sb.append("32");
+                }
+                else if (color.equals(NamedTextColor.DARK_AQUA)) {
+                    sb.append("36");
+                }
+                else if (color.equals(NamedTextColor.DARK_RED)) {
+                    sb.append("31");
+                }
+                else if (color.equals(NamedTextColor.DARK_PURPLE)) {
+                    sb.append("35");
+                }
+                else if (color.equals(NamedTextColor.GOLD)) {
+                    sb.append("33");
+                }
+                else if (color.equals(NamedTextColor.GRAY)) {
+                    sb.append("37");
+                }
+                else if (color.equals(NamedTextColor.DARK_GRAY)) {
+                    sb.append("37");
+                }
+                else if (color.equals(NamedTextColor.BLUE)) {
+                    sb.append("36");
+                }
+                else if (color.equals(NamedTextColor.GREEN)) {
+                    sb.append("32");
+                }
+                else if (color.equals(NamedTextColor.AQUA)) {
+                    sb.append("36");
+                }
+                else if (color.equals(NamedTextColor.RED)) {
+                    sb.append("31");
+                }
+                else if (color.equals(NamedTextColor.LIGHT_PURPLE)) {
+                    sb.append("35");
+                }
+                else if (color.equals(NamedTextColor.YELLOW)) {
+                    sb.append("33");
+                }
+                else {
+                    sb.append("37");
+                }
+                sb.append("m");
+                if (!has_ansi) {
+                    has_ansi = true;
+                }
+            }
+            sb.append(((TextComponent)c).content());
+        }
+        if (has_ansi) {
+            sb.append((char)27);
+            sb.append("[0m"); // reset the color
+        }
+        return sb.toString();
     }
 }
