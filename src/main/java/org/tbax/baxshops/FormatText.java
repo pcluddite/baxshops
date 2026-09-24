@@ -149,7 +149,7 @@ public class FormatText
 
     public static @NotNull Component bullet(@NotNull String b)
     {
-        return Component.text(b, NamedTextColor.DARK_GREEN);
+        return Component.text(b, NamedTextColor.GRAY);
     }
 
     public static @NotNull Component bullet(int b)
@@ -170,6 +170,11 @@ public class FormatText
     public static @NotNull Component keyword(@NotNull String word)
     {
         return Component.text(word, NamedTextColor.GREEN);
+    }
+
+    public static @NotNull Component strikethrough(@NotNull String text)
+    {
+        return Component.text(text, NamedTextColor.RED, TextDecoration.STRIKETHROUGH);
     }
 
     /**
