@@ -145,7 +145,7 @@ enchants:
   name: Sweeping Edge
   key:
     namespace: minecraft
-    key: sweeping
+    key: sweeping_edge
 - enchantment: THORNS
   name: Thorns
   id: 7
