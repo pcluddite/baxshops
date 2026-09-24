@@ -20,6 +20,7 @@
 package org.tbax.baxshops;
 
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -48,6 +49,7 @@ import org.tbax.bukkit.notification.Request;
 import org.tbax.bukkit.serialization.StoredPlayer;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -113,7 +115,7 @@ public final class ShopPlugin extends JavaPlugin
             return commands;
         }
         catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Could not instantiate CommandMap", e);
             return null;
         }
     }
@@ -440,13 +442,13 @@ public final class ShopPlugin extends JavaPlugin
 
         if (!enableVault()) {
             log.severe("BaxShops could not use this server's economy! Make sure Vault is installed!");
-            getPluginLoader().disablePlugin(this);
+            Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
         if ((commands = initCommands()) == null) {
             log.severe("BaxShops failed to initialize its commands");
-            getPluginLoader().disablePlugin(this);
+            Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
@@ -458,9 +460,8 @@ public final class ShopPlugin extends JavaPlugin
             state = State.readFromDisk(this);
         }
         catch (Exception e) {
-            e.printStackTrace();
-            log.severe("An exception occurred trying to read saved data. BaxShops cannot load.");
-            getPluginLoader().disablePlugin(this);
+            log.log(Level.SEVERE, "An exception occurred trying to read saved data. BaxShops cannot load.", e);
+            Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
