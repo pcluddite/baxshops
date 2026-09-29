@@ -326,12 +326,12 @@ public class FormatText
     public static @NotNull String toAnsiColor(@NotNull TextComponent component) // obnoxious method to convert minecraft message colors to ansi colors
     {
         StringBuilder sb = new StringBuilder();
-        boolean has_ansi = false;
+        boolean hasAnsi = false;
         List<Component> componentList = getAllComponents(component);
         for(Component c : componentList) {
-            if (!(c instanceof TextComponent))
+            if (!(c instanceof TextComponent current))
                 continue;
-            TextColor color = c.color();
+            TextColor color = current.color();
             if (color != null) {
                 sb.append((char)27);
                 sb.append("[0;");
@@ -384,13 +384,25 @@ public class FormatText
                     sb.append("37");
                 }
                 sb.append("m");
-                has_ansi = true;
+                hasAnsi = true;
             }
-            sb.append(((TextComponent)c).content());
+            sb.append(current.content());
         }
-        if (has_ansi) {
+        if (hasAnsi) {
             sb.append((char)27);
             sb.append("[0m"); // reset the color
+        }
+        return sb.toString();
+    }
+
+    public static String componentToString(@NotNull TextComponent component)
+    {
+        List<Component> componentList = getAllComponents(component);
+        StringBuilder sb = new StringBuilder();
+        for(Component c : componentList) {
+            if(c instanceof TextComponent current) {
+                sb.append(current.content());
+            }
         }
         return sb.toString();
     }
