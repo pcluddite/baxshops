@@ -211,16 +211,21 @@ public final class Format
 
     private static final String[] NUMERALS = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
     private static final int[] NUMBERS = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-    
+
     /**
      * Converts a number to a Roman numeral
      * @param n the number to convert to a numeral
-     * @return a string of the roman numeral
+     * @return a string of the Roman numeral
      */
     public static String toNumeral(int n)
     {
+        if (n == 0) return "nihil";
         StringBuilder sb = new StringBuilder();
         int numeralIdx = 0;
+        if (n < 0) {
+            sb.append('-');
+            n = Math.abs(n);
+        }
         do {
             int x = n / NUMBERS[numeralIdx];
             for (int i = 0; i < x; ++i) {
