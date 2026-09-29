@@ -302,6 +302,26 @@ public class FormatText
         return text;
     }
 
+    public static @NotNull String listOr(List<? extends CharSequence> elements)
+    {
+        return Format.listOr(elements);
+    }
+
+    public static @NotNull String listAnd(List<? extends CharSequence> elements)
+    {
+        return Format.listAnd(elements);
+    }
+
+    public static String toNumeral(int n)
+    {
+        return Format.toNumeral(n);
+    }
+
+    public static String toFriendlyName(String name)
+    {
+        return Format.toFriendlyName(name);
+    }
+
     private static @NotNull List<Component> getAllComponents(@NotNull Component component) {
         List<Component> result = new ArrayList<>();
         Deque<Component> stack = new ArrayDeque<>();
@@ -405,5 +425,15 @@ public class FormatText
             }
         }
         return sb.toString();
+    }
+
+    public static @NotNull Component stripColor(@NotNull Component component)
+    {
+        List<Component> componentList = getAllComponents(component);
+        TextComponent result = Component.empty();
+        for (Component c : componentList) {
+            result = result.append(c.color(null));
+        }
+        return result;
     }
 }

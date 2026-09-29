@@ -229,11 +229,13 @@ public final class Format
         return format + ChatColor.RESET;
     }
 
+    @Deprecated
     public static @NotNull String listOr(List<? extends CharSequence> elements)
     {
         return String.join(", ", elements.subList(0, elements.size() - 1)) + " or " + elements.get(elements.size() - 1);
     }
 
+    @Deprecated
     public static @NotNull String listAnd(List<? extends CharSequence> elements)
     {
         return String.join(", ", elements.subList(0, elements.size() - 1)) + " and " + elements.get(elements.size() - 1);
@@ -246,7 +248,9 @@ public final class Format
      * Converts a number to a Roman numeral
      * @param n the number to convert to a numeral
      * @return a string of the Roman numeral
+     * @deprecated Use {@link FormatText#toNumeral(int)}
      */
+    @Deprecated
     public static String toNumeral(int n)
     {
         if (n == 0) return "nihil";
@@ -266,13 +270,14 @@ public final class Format
         while (++numeralIdx < NUMERALS.length && n > 0);
         return sb.toString();
     }
-    
+
+    @Deprecated
     public static String toFriendlyName(String name)
     {
         if (name == null || name.isEmpty()) {
             return "";
         }
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(name.length());
         boolean upper = true;
         for(int index = 0; index < name.length(); ++index) {
             char c = name.charAt(index);
@@ -301,7 +306,7 @@ public final class Format
     public static @NotNull String toAnsiColor(@NotNull String message) // obnoxious method to convert minecraft message colors to ansi colors
     {
         StringBuilder sb = new StringBuilder();
-        boolean has_ansi = false;
+        boolean hasAnsi = false;
         for(int index = 0; index < message.length(); ++index) {
             char c = message.charAt(index);
             if (c == ChatColor.COLOR_CHAR && ++index < message.length()) {
@@ -329,15 +334,13 @@ public final class Format
                         sb.append("37"); break;
                 }
                 sb.append("m");
-                if (!has_ansi) {
-                    has_ansi = true;
-                }
+                hasAnsi = true;
             }
             else {
                 sb.append(c);
             }
         }
-        if (has_ansi) {
+        if (hasAnsi) {
             sb.append((char)27);
             sb.append("[0m"); // reset the color
         }
@@ -387,6 +390,7 @@ public final class Format
         return text;
     }
 
+    @Deprecated
     public static @NotNull String stripColor(@NotNull String str)
     {
         StringBuilder sb = new StringBuilder(str.length());
@@ -402,6 +406,7 @@ public final class Format
         return sb.toString();
     }
 
+    @Deprecated
     public static int countVisibleCharacters(String message)
     {
         int count = 0;
