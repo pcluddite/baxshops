@@ -28,9 +28,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Methods for formatting text components. Intended as a replacement for {@link Format}.
@@ -304,14 +302,25 @@ public class FormatText
         return text;
     }
 
-    private static @NotNull List<Component> getAllComponents(@NotNull Component component)
-    {
-        List<Component> components = new ArrayList<>();
-        components.add(component);
-        for (Component c : component.children()) {
-            components.addAll(getAllComponents(c));
+    private static @NotNull List<Component> getAllComponents(@NotNull Component component) {
+        List<Component> result = new ArrayList<>();
+        Deque<Component> stack = new ArrayDeque<>();
+
+        stack.push(component);
+
+        do {
+            Component current = stack.pop();
+            result.add(current);
+
+            // Push children in reverse order so the final order matches recursion
+            List<Component> children = current.children();
+            for (int i = children.size() - 1; i >= 0; --i) {
+                stack.push(children.get(i));
+            }
         }
-        return components;
+        while (!stack.isEmpty());
+
+        return result;
     }
 
     public static @NotNull String toAnsiColor(@NotNull TextComponent component) // obnoxious method to convert minecraft message colors to ansi colors
@@ -375,9 +384,7 @@ public class FormatText
                     sb.append("37");
                 }
                 sb.append("m");
-                if (!has_ansi) {
-                    has_ansi = true;
-                }
+                has_ansi = true;
             }
             sb.append(((TextComponent)c).content());
         }
