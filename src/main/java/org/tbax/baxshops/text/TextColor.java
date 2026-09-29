@@ -18,41 +18,40 @@
  */
 package org.tbax.baxshops.text;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 
 public enum TextColor
 {
-    BLACK       ("black"       , ChatColor.BLACK       , 0x000000),
-    DARK_BLUE   ("dark_blue"   , ChatColor.DARK_BLUE   , 0x0000AA),
-    DARK_GREEN  ("dark_green"  , ChatColor.DARK_GREEN  , 0x00AA00),
-    DARK_AQUA   ("dark_aqua"   , ChatColor.DARK_AQUA   , 0x00AAAA),
-    DARK_RED    ("dark_red"    , ChatColor.DARK_RED    , 0xAA0000),
-    DARK_PURPLE ("dark_purple" , ChatColor.DARK_PURPLE , 0xAA00AA),
-    GOLD        ("gold"        , ChatColor.GOLD        , 0xFFAA00),
-    GRAY        ("gray"        , ChatColor.GRAY        , 0xAAAAAA),
-    DARK_GRAY   ("dark_gray"   , ChatColor.DARK_GRAY   , 0x555555),
-    BLUE        ("blue"        , ChatColor.BLUE        , 0x5555FF),
-    GREEN       ("green"       , ChatColor.GREEN       , 0x55FF55),
-    AQUA        ("aqua"        , ChatColor.AQUA        , 0x55FFFF),
-    RED         ("red"         , ChatColor.RED         , 0xFF5555),
-    LIGHT_PURPLE("light_purple", ChatColor.LIGHT_PURPLE, 0xFF55FF),
-    YELLOW      ("yellow"      , ChatColor.YELLOW      , 0xFFFF55),
-    WHITE       ("white"       , ChatColor.WHITE       , 0xFFFFFF);
+    BLACK       (0x000000, "30"),
+    DARK_BLUE   (0x0000AA, "34"),
+    DARK_GREEN  (0x00AA00, "32"),
+    DARK_AQUA   (0x00AAAA, "36"),
+    DARK_RED    (0xAA0000, "31"),
+    DARK_PURPLE (0xAA00AA, "35"),
+    GOLD        (0xFFAA00, "33"),
+    GRAY        (0xAAAAAA, "37"),
+    DARK_GRAY   (0x555555, "37"),
+    BLUE        (0x5555FF, "36"),
+    GREEN       (0x55FF55, "32"),
+    AQUA        (0x55FFFF, "36"),
+    RED         (0xFF5555, "31"),
+    LIGHT_PURPLE(0xFF55FF, "35"),
+    YELLOW      (0xFFFF55, "33"),
+    WHITE       (0xFFFFFF, "37");
 
-    private final String value;
-    private final ChatColor chatColor;
     private final int hexColor;
+    private final String ansiColor;
 
-    TextColor(String value, ChatColor chatColor, int hexColor)
+    TextColor(int hexColor, String ansiColor)
     {
-        this.value = value;
-        this.chatColor = chatColor;
         this.hexColor = hexColor;
+        this.ansiColor = (char)27 + "[0;" + ansiColor + "m";
     }
 
     public ChatColor getChatColor()
     {
-        return chatColor;
+        return ChatColor.valueOf(name());
     }
 
     public int getHexColor()
@@ -60,9 +59,18 @@ public enum TextColor
         return hexColor;
     }
 
+    public String getAnsiColor()
+    {
+        return ansiColor;
+    }
+
+    public net.kyori.adventure.text.format.TextColor getKyoriColor() {
+        return NamedTextColor.NAMES.value(name());
+    }
+
     @Override
     public String toString()
     {
-        return value;
+        return name().toLowerCase();
     }
 }
