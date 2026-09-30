@@ -65,7 +65,7 @@ public enum TextColor
     }
 
     public net.kyori.adventure.text.format.TextColor getKyoriColor() {
-        return NamedTextColor.NAMES.value(name());
+        return NamedTextColor.NAMES.value(name().toLowerCase());
     }
 
     @Override
