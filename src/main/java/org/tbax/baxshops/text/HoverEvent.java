@@ -20,31 +20,39 @@ package org.tbax.baxshops.text;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import org.bukkit.inventory.ItemStack;
 
 public final class HoverEvent
 {
     private static final String EVENT_SHOW_TEXT = "show_text";
+    private static final String EVENT_SHOW_ITEM = "show_item";
 
-    private String event;
-    private JsonElement value;
-    private JsonObject contents;
+    private final String event;
+    private final JsonElement value;
+    private final JsonObject contents;
 
     private HoverEvent(String event, String value)
     {
         this.event = event;
         this.value = new JsonPrimitive(value);
+        this.contents = null;
     }
 
     private HoverEvent(String event, ChatComponent value)
     {
         this.event = event;
         this.value = value.toJsonObject();
+        this.contents = null;
     }
 
     private HoverEvent(String event, JsonObject contents)
     {
         this.event = event;
+        this.value = null;
         this.contents = contents;
     }
 
@@ -90,5 +98,13 @@ public final class HoverEvent
     public static HoverEvent showText(ChatComponent text)
     {
         return new HoverEvent(EVENT_SHOW_TEXT, text);
+    }
+
+    public static HoverEvent showItem(ItemStack item)
+    {
+        GsonComponentSerializer serializer = GsonComponentSerializer.gson();
+        String jsonString = serializer.serialize(Component.empty().hoverEvent(item.asHoverEvent()));
+        JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+        return new HoverEvent(EVENT_SHOW_ITEM, json.get("contents").getAsJsonObject());
     }
 }
