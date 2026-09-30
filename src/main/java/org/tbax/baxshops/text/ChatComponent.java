@@ -299,11 +299,11 @@ public final class ChatComponent
     public Component toKyoriComponent()
     {
         Component component = Component.text(text);
-        if (color != null) {
-            component = component.color(color.getKyoriColor());
-        }
         for (ChatTextStyle style : styles) {
             component = component.style(Style.style(TextDecoration.valueOf(style.name())));
+        }
+        if (color != null) {
+            component = component.color(color.getKyoriColor());
         }
         for (ChatComponent sib : siblings) {
             component = component.append(sib.toKyoriComponent());
