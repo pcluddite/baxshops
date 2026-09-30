@@ -95,6 +95,15 @@ public final class HoverEvent
         return new HoverEvent(EVENT_SHOW_TEXT, text);
     }
 
+    public net.kyori.adventure.text.event.HoverEvent<?> toKyoriEvent()
+    {
+        JsonObject json = toJsonObject();
+        json.addProperty("text", "");
+        GsonComponentSerializer serializer = GsonComponentSerializer.gson();
+        Component component = serializer.deserialize(toString());
+        return component.hoverEvent();
+    }
+
     public static HoverEvent showText(ChatComponent text)
     {
         return new HoverEvent(EVENT_SHOW_TEXT, text);

@@ -323,6 +323,9 @@ public final class ChatComponent
         if (clickEvent != null) {
             component = component.clickEvent(clickEvent.toKyoriEvent());
         }
+        if (hoverEvent != null) {
+            component = component.hoverEvent(hoverEvent.toKyoriEvent());
+        }
         return component;
     }
 
