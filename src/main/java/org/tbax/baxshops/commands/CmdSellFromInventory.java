@@ -22,15 +22,12 @@ import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
+import org.tbax.bukkit.CommandHelp;
+import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.bukkit.commands.BaxCommand;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.commands.CommandArgument;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
-import org.tbax.baxshops.ShopPlugin;
-import org.tbax.bukkit.CommandHelp;
-import org.tbax.bukkit.CommandHelpArgument;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -134,11 +131,11 @@ public final class CmdSellFromInventory extends ShopCommand
 
         double total = CmdSell.sell(actor, items.get(0));
         if (total > 0.0) {
-            actor.sendMessage("You earned %s.", Format.money(total));
-            actor.sendMessage(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer())));
+            actor.sendInfo("You earned %s.", Format.money(total));
+            actor.sendInfo(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer())));
         }
         else if (actor.getShop().hasFlagSellRequests()) {
-            actor.sendMessage("Your money will be deposited when the buyer accepts the sale.");
+            actor.sendInfo("Your money will be deposited when the buyer accepts the sale.");
         }
     }
 

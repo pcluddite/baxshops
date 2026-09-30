@@ -22,14 +22,12 @@ import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -124,7 +122,7 @@ public final class CmdEmpty extends ShopCommand
                 }
             }
             else {
-                actor.sendMessage("%s was added to your inventory", Format.itemName(stack.getAmount(), entry.getName()));
+                actor.sendInfo("%s was added to your inventory", Format.itemName(stack.getAmount(), entry.getName()));
             }
         }
     }

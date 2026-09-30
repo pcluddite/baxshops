@@ -156,16 +156,16 @@ public final class CmdBuy extends ShopCommand
 
             BuyRequest request = new BuyRequest(shop.getId(), actor.getPlayer(), shop.getOwner(), purchased);
             ShopPlugin.sendNotification(shop.getOwner(), request);
-            actor.sendMessage("Your request to buy %s for %s has been sent.", Format.itemName(purchased.getAmount(), itemName), Format.money(price));
+            actor.sendInfo("Your request to buy %s for %s has been sent.", Format.itemName(purchased.getAmount(), itemName), Format.money(price));
         }
         else {
             int overflow = actor.giveItem(purchased.toItemStack());
             if (overflow > 0) {
                 price = MathUtil.multiply((amount.getQuantity() - overflow), entry.getRetailPrice());
-                actor.sendMessage(Resources.SOME_ROOM + ". You were charged %s.", amount.getQuantity() - overflow, itemName, Format.money(price));
+                actor.sendInfo(Resources.SOME_ROOM + ". You were charged %s.", amount.getQuantity() - overflow, itemName, Format.money(price));
             }
             else {
-                actor.sendMessage("You bought %s for %s.", Format.itemName(purchased.getAmount(), itemName), Format.money(price));
+                actor.sendInfo("You bought %s for %s.", Format.itemName(purchased.getAmount(), itemName), Format.money(price));
             }
             ShopPlugin.getEconomy().withdrawPlayer(actor.getPlayer(), price);
             if (!shop.hasFlagInfinite()) {
@@ -176,7 +176,7 @@ public final class CmdBuy extends ShopCommand
 
             purchased.subtract(overflow);
 
-            actor.sendMessage(String.format(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer()))));
+            actor.sendInfo(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer())));
             ShopPlugin.sendNotification(shop.getOwner(), new BuyNotification(shop.getId(), actor.getPlayer(), shop.getOwner(), purchased));
         }
     }

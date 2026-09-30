@@ -22,14 +22,14 @@ package org.tbax.baxshops.commands;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.BaxEntry;
-import org.tbax.bukkit.CommandHelp;
-import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.baxshops.Format;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.Permissions;
 import org.tbax.baxshops.Resources;
 import org.tbax.baxshops.items.ItemUtil;
+import org.tbax.bukkit.CommandHelp;
+import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 public final class CmdAdd extends ShopCommand
 {
@@ -123,7 +123,7 @@ public final class CmdAdd extends ShopCommand
         newEntry.setRetailPrice(retailAmount);
         newEntry.setRefundPrice(refundAmount);
         actor.getShop().add(newEntry);
-        actor.sendMessage("A new entry for %s was added to the shop.", Format.itemName(newEntry.getAmount(), ItemUtil.getName(newEntry)));
+        actor.sendInfo("A new entry for %s was added to the shop.", Format.itemName(newEntry.getAmount(), ItemUtil.getName(newEntry)));
         if (!actor.getShop().hasFlagInfinite()) {
             actor.setItemInHand(null);
         }

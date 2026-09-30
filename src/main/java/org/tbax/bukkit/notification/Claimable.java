@@ -34,7 +34,7 @@ public interface Claimable extends Notification
         try {
             int overflow = actor.giveItem(entry.toItemStack(), false);
             if (overflow > 0) {
-                actor.sendMessage(Resources.SOME_ROOM, entry.getAmount() - overflow, entry.getName());
+                actor.sendInfo(Resources.SOME_ROOM, entry.getAmount() - overflow, entry.getName());
                 entry.setAmount(overflow);
                 return false;
             }

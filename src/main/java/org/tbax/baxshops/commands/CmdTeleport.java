@@ -21,14 +21,14 @@ package org.tbax.baxshops.commands;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.jetbrains.annotations.NotNull;
+import org.tbax.baxshops.Format;
+import org.tbax.baxshops.Permissions;
+import org.tbax.baxshops.ShopSelection;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
-import org.tbax.baxshops.Format;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.commands.CommandArgument;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.ShopSelection;
 
 import java.util.Arrays;
 import java.util.List;
@@ -107,7 +107,7 @@ public final class CmdTeleport extends ShopCommand
         Location old = selection.getLocation();
         selection.setLocation((Location)selection.getShop().getLocations().toArray()[loc - 1]);
         if (actor.getPlayer().teleport(selection.getLocation())) {
-            actor.sendMessage("Teleported you to %s", Format.location(selection.getLocation()));
+            actor.sendInfo("Teleported you to %s", Format.location(selection.getLocation()));
         }
         else {
             selection.setLocation(old);

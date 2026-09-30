@@ -136,10 +136,10 @@ public final class CmdTake extends ShopCommand
         int overflow = actor.giveItem(stack);
         if (overflow > 0) {
             entry.add(overflow);
-            actor.sendMessage(Resources.SOME_ROOM, stack.getAmount() - overflow, ItemUtil.getName(stack));
+            actor.sendInfo(Resources.SOME_ROOM, stack.getAmount() - overflow, ItemUtil.getName(stack));
         }
         else {
-            actor.sendMessage("%s %s added to your inventory.",
+            actor.sendInfo("%s %s added to your inventory.",
                     Format.itemName(stack.getAmount(), ItemUtil.getName(stack)),
                     amt.getQuantity() == 1 ? "was" : "were"
             );

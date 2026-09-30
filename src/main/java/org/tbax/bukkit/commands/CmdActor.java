@@ -293,14 +293,17 @@ public interface CmdActor extends CommandSender
     }
 
     @Override
-    default void sendMessage(@NotNull String[] strings)
+    default void sendMessage(@NotNull String... strings)
     {
         ShopPlugin.sendInfo(getSender(), strings);
     }
 
-    default void sendMessage(String format, Object... args)
-    {
-        sendMessage(String.format(format, args));
+    default void sendInfo(String msg) {
+        ShopPlugin.sendInfo(getSender(), msg);
+    }
+
+    default void sendInfo(String format, Object... args) {
+        sendInfo(String.format(format, args));
     }
 
     default void sendWarning(String msg)

@@ -22,16 +22,16 @@ package org.tbax.baxshops.commands;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.jetbrains.annotations.NotNull;
-import org.tbax.bukkit.CommandHelp;
-import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.baxshops.Format;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.Permissions;
 import org.tbax.baxshops.Resources;
 import org.tbax.baxshops.ShopPlugin;
 import org.tbax.baxshops.notification.LollipopNotification;
+import org.tbax.bukkit.CommandHelp;
+import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.bukkit.serialization.StoredPlayer;
 
 import java.util.Arrays;
@@ -130,7 +130,7 @@ public final class CmdLollipop extends ShopCommand
         if (otherPops.isEmpty()) {
             LollipopNotification lol = new LollipopNotification(sender, recipient, tastiness);
             ShopPlugin.sendNotification(recipient, lol);
-            actor.sendMessage("You sent %s lollipop to %s", lol.getAdornedTastiness(), Format.username2(recipient.getName()));
+            actor.sendInfo("You sent %s lollipop to %s", lol.getAdornedTastiness(), Format.username2(recipient.getName()));
         }
         else {
             actor.sendError("%s has to eat your %s lollipop before you can send another",

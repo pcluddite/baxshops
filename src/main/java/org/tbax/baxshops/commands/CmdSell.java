@@ -22,18 +22,15 @@ package org.tbax.baxshops.commands;
 import org.bukkit.command.Command;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
-import org.tbax.bukkit.commands.BaxCommand;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
-import org.tbax.baxshops.ShopPlugin;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.baxshops.notification.SaleRequest;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.bukkit.MathUtil;
+import org.tbax.bukkit.commands.BaxCommand;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -153,11 +150,11 @@ public final class CmdSell extends ShopCommand
             }
         }
         if (total > 0.0) {
-            actor.sendMessage("You earned %s.", Format.money(total));
-            actor.sendMessage(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer())));
+            actor.sendInfo("You earned %s.", Format.money(total));
+            actor.sendInfo(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer())));
         }
         else if (shop.hasFlagSellRequests()) {
-            actor.sendMessage("Your money will be deposited when the buyer accepts the sale.");
+            actor.sendInfo("Your money will be deposited when the buyer accepts the sale.");
         }
     }
 
@@ -170,7 +167,7 @@ public final class CmdSell extends ShopCommand
         if (shop.hasFlagSellRequests()) {
             SaleRequest request = new SaleRequest(shop.getId(), shop.getOwner(), actor.getPlayer(), entry);
             ShopPlugin.sendNotification(shop.getOwner(), request);
-            actor.sendMessage("Your request to sell %s for %s has been sent.",
+            actor.sendInfo("Your request to sell %s for %s has been sent.",
                     Format.itemName(entry.getAmount(), name), Format.money(price)
             );
             return 0;
@@ -178,7 +175,7 @@ public final class CmdSell extends ShopCommand
         else {
             PlayerUtil.sellItem(shop, shop.getOwner(), actor.getPlayer(), entry);
             PlayerUtil.takeFromInventory(actor.getPlayer().getInventory(), entry.getItemStack(), entry.getAmount(), actor.getShop().hasFlagSmartStack());
-            actor.sendMessage(
+            actor.sendInfo(
                     "You have sold %s for %s to %s.",
                     Format.itemName(entry.getAmount(), name),
                     Format.money(price),

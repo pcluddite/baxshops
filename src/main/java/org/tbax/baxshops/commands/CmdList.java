@@ -21,13 +21,13 @@ package org.tbax.baxshops.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
-import org.tbax.bukkit.CommandHelp;
-import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.baxshops.Format;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.Permissions;
 import org.tbax.baxshops.ShopSelection;
+import org.tbax.bukkit.CommandHelp;
+import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,7 @@ public final class CmdList extends ShopCommand
                 max = Math.min(stop, locations.size());
         for (; i < max; ++i) {
             Location loc = locations.get(i);
-            actor.sendMessage("%-3s %-16s %-18s %s",
+            actor.sendInfo("%-3s %-16s %-18s %s",
                     ChatColor.WHITE.toString() + (i + 1) + ".",
                     Format.location(loc),
                     ChatColor.LIGHT_PURPLE + actor.getShop().getSignTextString(loc),

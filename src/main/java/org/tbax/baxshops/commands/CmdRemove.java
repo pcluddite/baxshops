@@ -23,14 +23,12 @@ import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.List;
 
@@ -110,10 +108,10 @@ public final class CmdRemove extends ShopCommand
             int overflow = actor.giveItem(stack, false);
             entry.subtract(stack.getAmount() - overflow);
             if (overflow > 0) {
-                actor.sendMessage(Resources.SOME_ROOM, stack.getAmount() - overflow, entry.getName());
+                actor.sendInfo(Resources.SOME_ROOM, stack.getAmount() - overflow, entry.getName());
             }
             else {
-                actor.sendMessage("%s %s added to your inventory.",
+                actor.sendInfo("%s %s added to your inventory.",
                         Format.itemName(stack.getAmount(), ItemUtil.getName(entry)),
                         stack.getAmount() == 1 ? "was" : "were");
             }

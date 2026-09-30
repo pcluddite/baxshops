@@ -24,14 +24,12 @@ import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.commands.CommandArgument;
-import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.commands.CommandArgument;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -128,19 +126,19 @@ public final class CmdRestock extends ShopCommand
             BaxEntry takenItem = taken.get(0);
             entry.add(takenItem.getAmount());
             if (!(qty.isAll() || qty.isMost()) && takenItem.getAmount() < qty.getQuantity()) {
-                actor.sendMessage("Could only restock with " + ChatColor.RED + "%d %s" + ChatColor.RESET + ". The shop now has %s.",
+                actor.sendInfo("Could only restock with " + ChatColor.RED + "%d %s" + ChatColor.RESET + ". The shop now has %s.",
                         takenItem.getAmount(), ItemUtil.getName(takenItem), Format.number(entry.getAmount())
                 );
             }
             else {
-                actor.sendMessage("Restocked with %s in inventory. The shop now has %s.",
+                actor.sendInfo("Restocked with %s in inventory. The shop now has %s.",
                         Format.itemName(takenItem.getAmount(), ItemUtil.getName(entry)), Format.number(entry.getAmount())
                 );
             }
         }
         else {
             if (taken.isEmpty()) {
-                actor.sendMessage("You did not have any items that could be restocked at this shop.");
+                actor.sendInfo("You did not have any items that could be restocked at this shop.");
             }
             else {
                 for (BaxEntry takenEntry : taken) {
@@ -148,7 +146,7 @@ public final class CmdRestock extends ShopCommand
                         BaxEntry shopEntry = actor.getShop().find(takenEntry);
                         assert shopEntry != null;
                         shopEntry.add(takenEntry.getAmount());
-                        actor.sendMessage("Restocked %s.", Format.itemName(takenEntry.getAmount(), ItemUtil.getName(takenEntry)));
+                        actor.sendInfo("Restocked %s.", Format.itemName(takenEntry.getAmount(), ItemUtil.getName(takenEntry)));
                     }
                 }
             }

@@ -27,14 +27,16 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tbax.baxshops.BaxShop;
-import org.tbax.bukkit.CommandHelp;
 import org.tbax.baxshops.Format;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.Permissions;
 import org.tbax.baxshops.ShopPlugin;
+import org.tbax.bukkit.CommandHelp;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.errors.PrematureAbortException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class CmdDelete extends ShopCommand
@@ -131,26 +133,26 @@ public final class CmdDelete extends ShopCommand
         else if (shop.getLocations().size() == 1) {
             if (shop.isEmpty()) {
                 removeShop(actor, actor.getShop());
-                actor.sendMessage("%s's shop has been deleted", Format.username(shop.getOwner().getName()));
+                actor.sendInfo("%s's shop has been deleted", Format.username(shop.getOwner().getName()));
                 ShopPlugin.clearSelection(actor.getPlayer());
             }
             else {
                 actor.sendError("This is the last location of this shop, and it still has inventory.");
                 actor.sendError("Any inventory will not be recovered. Are you sure you want to delete it?");
-                actor.sendMessage("Type %s to confirm or %s", Format.command("/shop delete yes"), Format.command("/shop delete no"));
+                actor.sendInfo("Type %s to confirm or %s", Format.command("/shop delete yes"), Format.command("/shop delete no"));
                 confirmationMap.put(player.getUniqueId(), shop.getId());
             }
         }
         else if (actor.getNumArgs() == 2 && "all".equalsIgnoreCase(actor.getArg(1).asString())) {
             actor.sendError("You are about to delete all locations of this shop");
             actor.sendError("Any inventory will not be recovered. Are you sure you want to delete it?");
-            actor.sendMessage("Type %s to confirm or %s", Format.command("/shop delete yes"), Format.command("/shop delete no"));
+            actor.sendInfo("Type %s to confirm or %s", Format.command("/shop delete yes"), Format.command("/shop delete no"));
             confirmationMap.put(player.getUniqueId(), shop.getId());
         }
         else {
             ShopPlugin.removeLocation(shop.getId(), actor.getSelection().getLocation());
             changeSignText(actor, actor.getSelection().getLocation());
-            actor.sendMessage("This shop location has been closed");
+            actor.sendInfo("This shop location has been closed.");
             ShopPlugin.clearSelection(actor.getPlayer());
         }
     }
