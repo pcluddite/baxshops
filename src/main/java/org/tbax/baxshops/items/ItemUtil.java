@@ -26,6 +26,8 @@ import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.block.data.type.Sign;
 import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
@@ -549,17 +551,18 @@ public final class ItemUtil
     public static void changeSignText(@NotNull Block b, @NotNull String[] lines)
     {
         org.bukkit.block.Sign sign = (org.bukkit.block.Sign)b.getState();
+        SignSide frontSide = sign.getSide(Side.FRONT);
         if (lines.length < 3) {
-            sign.setLine(0, "");
-            sign.setLine(1, lines[0]);
-            sign.setLine(2, lines.length > 1 ? lines[1] : "");
-            sign.setLine(3, "");
+            frontSide.line(0, Component.empty());
+            frontSide.line(1, Component.text(lines[0]));
+            frontSide.line(2, lines.length > 1 ? Component.text(lines[1]) : Component.empty());
+            frontSide.line(3, Component.empty());
         }
         else {
-            sign.setLine(0, lines[0]);
-            sign.setLine(1, lines[1]);
-            sign.setLine(2, lines[2]);
-            sign.setLine(3, lines.length > 3 ? lines[3] : "");
+            frontSide.line(0, Component.text(lines[0]));
+            frontSide.line(1, Component.text(lines[1]));
+            frontSide.line(2, Component.text(lines[2]));
+            frontSide.line(3, lines.length > 3 ? Component.text(lines[3]) : Component.empty());
         }
         sign.update();
     }

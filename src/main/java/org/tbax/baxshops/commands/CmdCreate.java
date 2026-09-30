@@ -19,26 +19,26 @@
  */
 package org.tbax.baxshops.commands;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
+import org.tbax.baxshops.items.ItemUtil;
+import org.tbax.bukkit.CommandHelp;
+import org.tbax.bukkit.CommandHelpArgument;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.commands.CommandArgument;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
-import org.tbax.baxshops.ShopPlugin;
-import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.bukkit.serialization.StoredPlayer;
-import org.tbax.bukkit.CommandHelp;
-import org.tbax.bukkit.CommandHelpArgument;
 
 import java.util.Arrays;
 import java.util.List;
@@ -166,6 +166,7 @@ public final class CmdCreate extends ShopCommand
         actor.sendMessage(Format.username(shop.getOwner().getName()) + "'s shop has been created.");
         actor.sendMessage(Format.flag("Buy requests") + " for this shop are " + Format.keyword(shop.hasFlagBuyRequests() ? "on" : "off"));
         actor.sendMessage(Format.flag("Sell requests") + " for this shop are " + Format.keyword(shop.hasFlagSellRequests() ? "on" : "off"));
+        ShopPlugin.logInfo(shop.getOwner().getName() + " created a new shop with UUID " + shop.getId());
     }
 
     private static void buildShopSign(@NotNull Location loc, @NotNull ItemStack sign, @NotNull String... signLines) throws PrematureAbortException
@@ -189,8 +190,9 @@ public final class CmdCreate extends ShopCommand
         }
 
         Sign signBlock = (Sign)b.getState();
+        SignSide side = signBlock.getSide(Side.FRONT);
         for (int i = 0; i < signLines.length; ++i) {
-            signBlock.setLine(i, signLines[i]);
+            side.line(i, Component.text(signLines[i]));
         }
         signBlock.update();
 
