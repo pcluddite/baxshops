@@ -24,15 +24,11 @@ import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.tbax.baxshops.ShopPlugin;
-import org.tbax.baxshops.nms.RuntimeObject;
 
-import java.lang.reflect.Method;
 import java.util.*;
 
 @SuppressWarnings({ "unused", "UnusedReturnValue" })
@@ -226,15 +222,7 @@ public final class ChatComponent
 
     public void sendTo(Player player)
     {
-        try {
-            Component component = GsonComponentSerializer.gson().deserialize(toString());
-            Method sendMessage = Player.class.getMethod("sendMessage", RuntimeObject.getRuntimeClass("net.kyori.adventure.text.Component"));
-            sendMessage.invoke(player, component);
-        }
-        catch (ReflectiveOperationException e) {
-            ShopPlugin.logSevere("Reflection error at " +  e.getMessage());
-            player.sendMessage(toPlainString());
-        }
+        player.sendMessage(toKyoriComponent());
     }
 
     public ClickEvent getClickEvent()
