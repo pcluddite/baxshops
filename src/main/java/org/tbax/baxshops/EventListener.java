@@ -20,6 +20,7 @@
 package org.tbax.baxshops;
 
 import com.google.common.base.Objects;
+import io.papermc.paper.event.player.PlayerOpenSignEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -35,15 +36,14 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerSignOpenEvent;
 import org.bukkit.inventory.ItemStack;
-import org.tbax.bukkit.errors.CommandErrorException;
-import org.tbax.bukkit.errors.CommandWarningException;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.baxshops.text.ChatComponent;
 import org.tbax.baxshops.text.ClickEvent;
 import org.tbax.baxshops.text.HoverEvent;
+import org.tbax.bukkit.errors.CommandErrorException;
+import org.tbax.bukkit.errors.CommandWarningException;
+import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.bukkit.serialization.StoredPlayer;
 
 import java.util.UUID;
@@ -275,8 +275,8 @@ public class EventListener implements Listener
         }
     }
 
-    @EventHandler
-    public void onSignOpen(PlayerSignOpenEvent event)
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerSignOpen(PlayerOpenSignEvent event)
     {
         BaxShop shop = ShopPlugin.getShop(event.getSign().getLocation().getBlock().getLocation());
         if (shop != null) {
