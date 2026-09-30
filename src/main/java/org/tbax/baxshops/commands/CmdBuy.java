@@ -176,7 +176,7 @@ public final class CmdBuy extends ShopCommand
 
             purchased.subtract(overflow);
 
-            actor.sendMessage(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer())));
+            actor.sendMessage(String.format(Resources.CURRENT_BALANCE, Format.money2(ShopPlugin.getEconomy().getBalance(actor.getPlayer()))));
             ShopPlugin.sendNotification(shop.getOwner(), new BuyNotification(shop.getId(), actor.getPlayer(), shop.getOwner(), purchased));
         }
     }
