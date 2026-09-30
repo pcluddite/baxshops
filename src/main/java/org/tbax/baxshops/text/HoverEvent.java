@@ -97,10 +97,11 @@ public final class HoverEvent
 
     public net.kyori.adventure.text.event.HoverEvent<?> toKyoriEvent()
     {
-        JsonObject json = toJsonObject();
+        JsonObject json = new JsonObject();
         json.addProperty("text", "");
+        json.add("hover_event", toJsonObject());
         GsonComponentSerializer serializer = GsonComponentSerializer.gson();
-        Component component = serializer.deserialize(toString());
+        Component component = serializer.deserialize(json.toString());
         return component.hoverEvent();
     }
 
