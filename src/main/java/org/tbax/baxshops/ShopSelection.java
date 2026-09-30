@@ -19,12 +19,15 @@
  */
 package org.tbax.baxshops;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
-import org.tbax.baxshops.text.*;
 
 /**
  * A ShopSelection represents a user's selected shop.
@@ -99,20 +102,20 @@ public final class ShopSelection
     {
         int pages = shop.getPages();
         if (pages == 0) {
-            sender.sendMessage(Format.header("Empty"));
+            sender.sendMessage(FormatText.header("Empty"));
             sender.sendMessage("");
             sender.sendMessage("This shop has no items");
             int stop = ITEMS_PER_PAGE - 2;
             if (owner) {
                 sender.sendMessage("Use /shop add to add items");
-                stop--;
+                --stop;
             }
             for (int i = 0; i < stop; ++i) {
                 sender.sendMessage("");
             }
         }
         else {
-            Format.header(page + 1, pages, "/shop page").sendTo(sender);
+            sender.sendMessage(FormatText.header(page + 1, pages, "/shop page"));
             int i = page * ITEMS_PER_PAGE,
                     stop = (page + 1) * ITEMS_PER_PAGE,
                     max = Math.min(stop, shop.size());
@@ -132,15 +135,15 @@ public final class ShopSelection
 
     public void showIntro(CommandSender sender)
     {
-        ChatComponent msg = new ChatComponent("Welcome to ", TextColor.WHITE)
-                .append(owner ? "your " : shop.getOwner().getName() + "'s ", TextColor.DARK_BLUE)
-                .append("shop")
-                .appendLine()
-                .append(ChatComponent.of("For help with shops, type ", TextColor.GRAY)
-                        .append(ChatComponent.of("/shop help", ChatTextStyle.UNDERLINED)
-                                .clickEvent(ClickEvent.runCommand("/shop help"))
-                                .hoverEvent(HoverEvent.showText(ChatColor.AQUA + "Get help with shops"))
-                ));
-        msg.sendTo(sender);
+        Component msg = Component.text("Welcome to ", NamedTextColor.WHITE)
+                .append(Component.text(owner ? "your " : shop.getOwner().getName() + "'s ", NamedTextColor.BLUE))
+                .append(Component.text("shop", NamedTextColor.WHITE))
+                .appendNewline()
+                .append(Component.text("For help with shops, type ", NamedTextColor.GRAY)
+                    .append(Component.text("/shop help").decorate(TextDecoration.UNDERLINED)
+                            .clickEvent(ClickEvent.runCommand("/shop help"))
+                            .hoverEvent(HoverEvent.showText(Component.text("Get help with shops", NamedTextColor.AQUA))
+                )));
+        sender.sendMessage(msg);
     }
 }
