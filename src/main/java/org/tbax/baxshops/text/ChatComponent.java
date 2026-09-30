@@ -22,7 +22,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -313,13 +312,16 @@ public final class ChatComponent
     {
         Component component = Component.text(text);
         if (color != null) {
-            component = component.color(NamedTextColor.NAMES.value(color.name()));
+            component = component.color(color.getKyoriColor());
         }
         for (ChatTextStyle style : styles) {
             component = component.style(Style.style(TextDecoration.valueOf(style.name())));
         }
         for (ChatComponent sib : siblings) {
             component = component.append(sib.toKyoriComponent());
+        }
+        if (clickEvent != null) {
+            component = component.clickEvent(clickEvent.toKyoriEvent());
         }
         return component;
     }

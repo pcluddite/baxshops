@@ -22,8 +22,12 @@ import com.google.gson.JsonObject;
 
 public final class ClickEvent
 {
-    private String event;
-    private String value;
+    private static final String EVENT_RUN_COMMAND = "run_command";
+    private static final String EVENT_SUGGEST_COMMAND = "suggest_command";
+    private static final String EVENT_OPEN_URL = "open_url";
+
+    private final String event;
+    private final String value;
 
     private ClickEvent(String event, String value)
     {
@@ -49,6 +53,20 @@ public final class ClickEvent
         return object;
     }
 
+    public net.kyori.adventure.text.event.ClickEvent<?> toKyoriEvent()
+    {
+        if (EVENT_RUN_COMMAND.equals(event)) {
+            return net.kyori.adventure.text.event.ClickEvent.runCommand(value);
+        }
+        else if (EVENT_SUGGEST_COMMAND.equals(event)) {
+            return net.kyori.adventure.text.event.ClickEvent.suggestCommand(value);
+        }
+        else if (EVENT_OPEN_URL.equals(event)) {
+            return net.kyori.adventure.text.event.ClickEvent.openUrl(value);
+        }
+        throw new UnsupportedOperationException("Unsupported event: " + event);
+    }
+
     @Override
     public String toString()
     {
@@ -57,16 +75,16 @@ public final class ClickEvent
 
     public static ClickEvent runCommand(String command)
     {
-        return new ClickEvent("run_command", command);
+        return new ClickEvent(EVENT_RUN_COMMAND, command);
     }
 
     public static ClickEvent suggestCommand(String command)
     {
-        return new ClickEvent("suggest_command", command);
+        return new ClickEvent(EVENT_SUGGEST_COMMAND, command);
     }
 
     public static ClickEvent openUrl(String url)
     {
-        return new ClickEvent("open_url", url);
+        return new ClickEvent(EVENT_OPEN_URL, url);
     }
 }
