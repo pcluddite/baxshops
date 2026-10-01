@@ -164,10 +164,14 @@ public class FormatText
     public static @NotNull Component command(@NotNull String command)
     {
         int space = command.indexOf(' ');
-        if (space < 0)
-            return Component.text(command, NamedTextColor.GOLD);
-        return Component.text(command.substring(0, space), NamedTextColor.GOLD)
-                .append(Component.text(command.substring(space), NamedTextColor.GRAY));
+        String commandName = space < 0 ? command : command.substring(0, space);
+        Component component = Component.text(commandName, NamedTextColor.GOLD)
+                .clickEvent(ClickEvent.suggestCommand("/" + commandName));
+        if (space > -1) {
+            component = component.appendSpace()
+                    .append(Component.text(command.substring(space + 1), NamedTextColor.GRAY));
+        }
+        return component;
     }
 
     public static @NotNull Component retailPrice(@NotNull String price)
