@@ -19,7 +19,9 @@
 package org.tbax.baxshops.text;
 
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.ChatColor;
+import org.tbax.baxshops.FormatText;
 
 public enum ChatTextColor
 {
@@ -38,7 +40,14 @@ public enum ChatTextColor
     RED         (0xFF5555, "31"),
     LIGHT_PURPLE(0xFF55FF, "35"),
     YELLOW      (0xFFFF55, "33"),
-    WHITE       (0xFFFFFF, "37");
+    WHITE       (0xFFFFFF, "37"),
+    RESET       (0x000000, "0") {
+        @Override
+        public NamedTextColor getKyoriColor()
+        {
+            return null;
+        }
+    };
 
     private final int hexColor;
     private final String ansiColor;
@@ -72,5 +81,24 @@ public enum ChatTextColor
     public String toString()
     {
         return name().toLowerCase();
+    }
+
+    public static ChatTextColor getChatTextColor(ChatColor color)
+    {
+        return ChatTextColor.valueOf(color.name());
+    }
+
+    public static ChatTextColor getChatTextColor(TextColor color)
+    {
+        NamedTextColor namedTextColor = NamedTextColor.namedColor(color.value());
+        if (namedTextColor == null) {
+            throw new IllegalArgumentException("Unknown color: " + FormatText.toHexString(color.value()));
+        }
+        return getChatTextColor(namedTextColor);
+    }
+
+    public static ChatTextColor getChatTextColor(NamedTextColor color)
+    {
+        return ChatTextColor.valueOf(color.name().toUpperCase());
     }
 }

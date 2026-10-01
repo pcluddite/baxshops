@@ -27,6 +27,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+import org.tbax.baxshops.text.ChatTextColor;
 
 import java.util.*;
 
@@ -343,7 +344,7 @@ public class FormatText
         return result;
     }
 
-    public static @NotNull String toAnsiColor(@NotNull TextComponent component) // obnoxious method to convert minecraft message colors to ansi colors
+    public static @NotNull String toAnsiColor(@NotNull TextComponent component)
     {
         StringBuilder sb = new StringBuilder();
         boolean hasAnsi = false;
@@ -353,57 +354,14 @@ public class FormatText
                 continue;
             TextColor color = current.color();
             if (color != null) {
-                sb.append((char)27);
-                sb.append("[0;");
-                if (color.equals(NamedTextColor.BLACK)) {
-                    sb.append("30");
+                ChatTextColor chatTextColor;
+                try {
+                    chatTextColor = ChatTextColor.getChatTextColor(color);
                 }
-                else if (color.equals(NamedTextColor.DARK_BLUE)) {
-                    sb.append("34");
+                catch (IllegalArgumentException e) {
+                    chatTextColor = ChatTextColor.WHITE;
                 }
-                else if (color.equals(NamedTextColor.DARK_GREEN)) {
-                    sb.append("32");
-                }
-                else if (color.equals(NamedTextColor.DARK_AQUA)) {
-                    sb.append("36");
-                }
-                else if (color.equals(NamedTextColor.DARK_RED)) {
-                    sb.append("31");
-                }
-                else if (color.equals(NamedTextColor.DARK_PURPLE)) {
-                    sb.append("35");
-                }
-                else if (color.equals(NamedTextColor.GOLD)) {
-                    sb.append("33");
-                }
-                else if (color.equals(NamedTextColor.GRAY)) {
-                    sb.append("37");
-                }
-                else if (color.equals(NamedTextColor.DARK_GRAY)) {
-                    sb.append("37");
-                }
-                else if (color.equals(NamedTextColor.BLUE)) {
-                    sb.append("36");
-                }
-                else if (color.equals(NamedTextColor.GREEN)) {
-                    sb.append("32");
-                }
-                else if (color.equals(NamedTextColor.AQUA)) {
-                    sb.append("36");
-                }
-                else if (color.equals(NamedTextColor.RED)) {
-                    sb.append("31");
-                }
-                else if (color.equals(NamedTextColor.LIGHT_PURPLE)) {
-                    sb.append("35");
-                }
-                else if (color.equals(NamedTextColor.YELLOW)) {
-                    sb.append("33");
-                }
-                else {
-                    sb.append("37");
-                }
-                sb.append("m");
+                sb.append(chatTextColor.getAnsiColor());
                 hasAnsi = true;
             }
             sb.append(current.content());
@@ -435,5 +393,47 @@ public class FormatText
             result = result.append(c.color(null));
         }
         return result;
+    }
+
+    public static @NotNull String toHexString(int value)
+    {
+        return toHexString(value, 6); // 6 is max hex digits in a byte
+    }
+
+    public static @NotNull String toHexString(int value, int width)
+    {
+        return "0x" + padLeft(Integer.toHexString(value).toUpperCase(), width, '0');
+    }
+
+    public static @NotNull String padLeft(@NotNull String s, int width)
+    {
+        return padLeft(s, width, ' ');
+    }
+
+    public static @NotNull String padLeft(@NotNull String s, int width, char padChar)
+    {
+        if (s.length() >= width) return s;
+        StringBuilder sb = new StringBuilder(width);
+        while (sb.length() < width - s.length()) {
+            sb.append(padChar);
+        }
+        sb.append(s);
+        return sb.toString();
+    }
+
+    public static @NotNull String padRight(@NotNull String s, int width)
+    {
+        return padRight(s, width, ' ');
+    }
+
+    public static @NotNull String padRight(@NotNull String s, int width, char padChar)
+    {
+        if (s.length() >= width) return s;
+        StringBuilder sb = new StringBuilder(width);
+        sb.append(s);
+        while (sb.length() < width - s.length()) {
+            sb.append(padChar);
+        }
+        return sb.toString();
     }
 }
