@@ -303,7 +303,7 @@ public final class Format
         return sb.toString();
     }
     
-    public static @NotNull String toAnsiColor(@NotNull String message) // obnoxious method to convert minecraft message colors to ansi colors
+    public static @NotNull String toAnsiColor(@NotNull String message)
     {
         StringBuilder sb = new StringBuilder();
         boolean hasAnsi = false;
@@ -311,29 +311,14 @@ public final class Format
             char c = message.charAt(index);
             if (c == ChatColor.COLOR_CHAR && ++index < message.length()) {
                 c = Character.toLowerCase(message.charAt(index));
-                sb.append((char)27);
-                sb.append("[0;");
-                switch(c) {
-                    case '0': sb.append("30"); break;
-                    case '1': sb.append("34"); break;
-                    case '2': sb.append("32"); break;
-                    case '3': sb.append("36"); break;
-                    case '4': sb.append("31"); break;
-                    case '5': sb.append("35"); break;
-                    case '6': sb.append("33"); break;
-                    case '7': sb.append("37"); break;
-                    case '8': sb.append("37"); break;
-                    case '9': sb.append("36"); break;
-                    case 'a': sb.append("32"); break;
-                    case 'b': sb.append("36"); break;
-                    case 'c': sb.append("31"); break;
-                    case 'd': sb.append("35"); break;
-                    case 'e': sb.append("33"); break;
-                    case 'f': sb.append("37"); break;
-                    default:
-                        sb.append("37"); break;
+                ChatTextColor chatTextColor;
+                try {
+                    chatTextColor = ChatTextColor.getChatTextColor(c);
                 }
-                sb.append("m");
+                catch (IllegalArgumentException e) {
+                    chatTextColor = ChatTextColor.WHITE;
+                }
+                sb.append(chatTextColor.getAnsiColor());
                 hasAnsi = true;
             }
             else {
