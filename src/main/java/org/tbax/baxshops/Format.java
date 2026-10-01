@@ -368,24 +368,24 @@ public final class Format
     @Deprecated
     public static @NotNull ChatComponent header(int page, int maxPages, String command)
     {
-        ChatComponent text = ChatComponent.of("", TextColor.GRAY);
+        ChatComponent text = ChatComponent.of("", ChatTextColor.GRAY);
         if (page > 1) {
-            text.append(ChatComponent.of("<<", TextColor.GOLD, ChatTextStyle.UNDERLINED)
+            text.append(ChatComponent.of("<<", ChatTextColor.GOLD, ChatTextStyle.UNDERLINED)
                     .hoverEvent(HoverEvent.showText(ChatColor.AQUA + "Previous"))
                     .clickEvent(ClickEvent.runCommand(command + " " + (page - 1))));
         }
         else {
-            text.append(ChatComponent.of("<<", TextColor.DARK_GRAY));
+            text.append(ChatComponent.of("<<", ChatTextColor.DARK_GRAY));
         }
-        text.append(" --------- ").append(String.format("Showing page %d of %d", page, maxPages), TextColor.WHITE).append(" --------- ");
+        text.append(" --------- ").append(String.format("Showing page %d of %d", page, maxPages), ChatTextColor.WHITE).append(" --------- ");
 
         if (page < maxPages) {
-            text.append(ChatComponent.of(">>", TextColor.GOLD, ChatTextStyle.UNDERLINED)
+            text.append(ChatComponent.of(">>", ChatTextColor.GOLD, ChatTextStyle.UNDERLINED)
                     .hoverEvent(HoverEvent.showText(ChatColor.AQUA + "Next"))
                     .clickEvent(ClickEvent.runCommand(command + " " + (page + 1))));
         }
         else {
-            text.append(ChatComponent.of(">>", TextColor.DARK_GRAY));
+            text.append(ChatComponent.of(">>", ChatTextColor.DARK_GRAY));
         }
         return text;
     }

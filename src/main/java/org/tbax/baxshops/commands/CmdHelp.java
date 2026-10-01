@@ -21,17 +21,13 @@ package org.tbax.baxshops.commands;
 
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
+import org.tbax.baxshops.*;
+import org.tbax.baxshops.text.*;
 import org.tbax.bukkit.CommandHelp;
 import org.tbax.bukkit.CommandHelpArgument;
-import org.tbax.baxshops.Format;
 import org.tbax.bukkit.commands.BaxCommand;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Permissions;
-import org.tbax.baxshops.Resources;
-import org.tbax.baxshops.ShopPlugin;
-import org.tbax.baxshops.ShopSelection;
-import org.tbax.baxshops.text.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -139,7 +135,7 @@ public final class CmdHelp extends ShopCommand
         for (; i < max; ++i) {
             CommandHelp help = commands.get(i).getHelp(actor);
             ChatComponent.of("").append(
-                    ChatComponent.of(help.getAction(), TextColor.GOLD, ChatTextStyle.UNDERLINED)
+                    ChatComponent.of(help.getAction(), ChatTextColor.GOLD, ChatTextStyle.UNDERLINED)
                             .hoverEvent(HoverEvent.showText(ChatColor.GRAY + "Click for more info"))
                             .clickEvent(ClickEvent.runCommand("/shop help " + help.getAction())))
                     .append(": ")

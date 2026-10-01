@@ -36,7 +36,7 @@ public final class ChatComponent
 {
     private final List<ChatComponent> siblings = new ArrayList<>();
     private final Set<ChatTextStyle> styles = new HashSet<>();
-    private TextColor color = null;
+    private ChatTextColor color = null;
     private ClickEvent clickEvent = null;
     private HoverEvent hoverEvent = null;
 
@@ -47,7 +47,7 @@ public final class ChatComponent
         this.text = text;
     }
 
-    public ChatComponent(String text, TextColor color)
+    public ChatComponent(String text, ChatTextColor color)
     {
         this.text = text;
         this.color = color;
@@ -78,7 +78,7 @@ public final class ChatComponent
         this(text, Arrays.asList(styles));
     }
 
-    public ChatComponent(String text, TextColor color, Collection<ChatTextStyle> styles)
+    public ChatComponent(String text, ChatTextColor color, Collection<ChatTextStyle> styles)
     {
         this.text = text;
         this.color = color;
@@ -87,7 +87,7 @@ public final class ChatComponent
         }
     }
 
-    public ChatComponent(String text, TextColor color, ChatTextStyle... styles)
+    public ChatComponent(String text, ChatTextColor color, ChatTextStyle... styles)
     {
         this(text, color, Arrays.asList(styles));
     }
@@ -102,12 +102,12 @@ public final class ChatComponent
         this.text = text;
     }
 
-    public TextColor getColor()
+    public ChatTextColor getColor()
     {
         return color;
     }
 
-    public void setColor(TextColor color)
+    public void setColor(ChatTextColor color)
     {
         this.color = color;
     }
@@ -153,7 +153,7 @@ public final class ChatComponent
         return this;
     }
 
-    public ChatComponent append(String text, TextColor color)
+    public ChatComponent append(String text, ChatTextColor color)
     {
         addSibling(new ChatComponent(text, color));
         return this;
@@ -176,13 +176,13 @@ public final class ChatComponent
         return append(text, Arrays.asList(styles));
     }
 
-    public ChatComponent append(String text, TextColor color, Collection<ChatTextStyle> styles)
+    public ChatComponent append(String text, ChatTextColor color, Collection<ChatTextStyle> styles)
     {
         addSibling(new ChatComponent(text, color, styles));
         return this;
     }
 
-    public ChatComponent append(String text, TextColor color, ChatTextStyle... styles)
+    public ChatComponent append(String text, ChatTextColor color, ChatTextStyle... styles)
     {
         return append(text, color, Arrays.asList(styles));
     }
@@ -328,7 +328,7 @@ public final class ChatComponent
         return new ChatComponent(text);
     }
 
-    public static ChatComponent of(String text, TextColor color)
+    public static ChatComponent of(String text, ChatTextColor color)
     {
         return new ChatComponent(text, color);
     }
@@ -353,12 +353,12 @@ public final class ChatComponent
         return new ChatComponent(text, styles);
     }
 
-    public static ChatComponent of(String text, TextColor color, Collection<ChatTextStyle> styles)
+    public static ChatComponent of(String text, ChatTextColor color, Collection<ChatTextStyle> styles)
     {
         return new ChatComponent(text, color, styles);
     }
 
-    public static ChatComponent of(String text, TextColor color, ChatTextStyle... styles)
+    public static ChatComponent of(String text, ChatTextColor color, ChatTextStyle... styles)
     {
         return new ChatComponent(text, color, styles);
     }

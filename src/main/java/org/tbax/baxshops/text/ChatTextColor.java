@@ -21,7 +21,7 @@ package org.tbax.baxshops.text;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 
-public enum TextColor
+public enum ChatTextColor
 {
     BLACK       (0x000000, "30"),
     DARK_BLUE   (0x0000AA, "34"),
@@ -43,7 +43,7 @@ public enum TextColor
     private final int hexColor;
     private final String ansiColor;
 
-    TextColor(int hexColor, String ansiColor)
+    ChatTextColor(int hexColor, String ansiColor)
     {
         this.hexColor = hexColor;
         this.ansiColor = (char)27 + "[0;" + ansiColor + "m";
@@ -64,7 +64,7 @@ public enum TextColor
         return ansiColor;
     }
 
-    public net.kyori.adventure.text.format.TextColor getKyoriColor() {
+    public NamedTextColor getKyoriColor() {
         return NamedTextColor.NAMES.value(name().toLowerCase());
     }
 
