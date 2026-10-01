@@ -22,8 +22,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -300,7 +298,7 @@ public final class ChatComponent
     {
         Component component = Component.text(text);
         for (ChatTextStyle style : styles) {
-            component = component.style(Style.style(TextDecoration.valueOf(style.name())));
+            component = component.decorate(style.getKyoriDecoration());
         }
         if (color != null) {
             component = component.color(color.getKyoriColor());

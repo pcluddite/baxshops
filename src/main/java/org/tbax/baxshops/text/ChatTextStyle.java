@@ -18,6 +18,7 @@
  */
 package org.tbax.baxshops.text;
 
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 
 public enum ChatTextStyle
@@ -28,8 +29,8 @@ public enum ChatTextStyle
     STRIKETHROUGH("strikethrough", ChatColor.STRIKETHROUGH),
     OBFUSCATED("obfuscated", ChatColor.MAGIC);
 
-    private String style;
-    private ChatColor chatColorStyle;
+    private final String style;
+    private final ChatColor chatColorStyle;
 
     ChatTextStyle(String style, ChatColor chatColorStyle)
     {
@@ -46,5 +47,10 @@ public enum ChatTextStyle
     public ChatColor getChatColorStyle()
     {
         return chatColorStyle;
+    }
+
+    public TextDecoration getKyoriDecoration()
+    {
+        return TextDecoration.valueOf(name());
     }
 }
