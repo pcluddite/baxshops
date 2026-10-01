@@ -21,6 +21,7 @@ package org.tbax.baxshops.text;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.FormatText;
 
 public enum ChatTextColor
@@ -83,21 +84,28 @@ public enum ChatTextColor
         return name().toLowerCase();
     }
 
-    public static ChatTextColor getChatTextColor(ChatColor color)
+    public static ChatTextColor getChatTextColor(@NotNull ChatColor color)
     {
         return ChatTextColor.valueOf(color.name());
     }
 
-    public static ChatTextColor getChatTextColor(TextColor color)
+    public static ChatTextColor getChatTextColor(char colorChar)
+    {
+        ChatColor color = ChatColor.getByChar(Character.toLowerCase(colorChar));
+        if (color == null)
+            throw new IllegalArgumentException("Unknown color: " + ChatColor.COLOR_CHAR + colorChar);
+        return getChatTextColor(color);
+    }
+
+    public static ChatTextColor getChatTextColor(@NotNull TextColor color)
     {
         NamedTextColor namedTextColor = NamedTextColor.namedColor(color.value());
-        if (namedTextColor == null) {
+        if (namedTextColor == null)
             throw new IllegalArgumentException("Unknown color: " + FormatText.toHexString(color.value()));
-        }
         return getChatTextColor(namedTextColor);
     }
 
-    public static ChatTextColor getChatTextColor(NamedTextColor color)
+    public static ChatTextColor getChatTextColor(@NotNull NamedTextColor color)
     {
         return ChatTextColor.valueOf(color.name().toUpperCase());
     }
