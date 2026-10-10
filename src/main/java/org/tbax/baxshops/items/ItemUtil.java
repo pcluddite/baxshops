@@ -364,7 +364,7 @@ public final class ItemUtil
         lore = lore.subList(0, lore.size() - 1); // last line of lore is the UUID
         Component[] lines = new Component[lore.size()];
         for (int i = 0; i < lines.length; ++i) {
-            lines[i] = lore.get(i).color(null);
+            lines[i] = FormatText.stripColor(lore.get(i));
         }
         return lines;
     }
