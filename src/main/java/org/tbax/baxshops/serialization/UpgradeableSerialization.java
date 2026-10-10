@@ -76,7 +76,7 @@ public final class UpgradeableSerialization
             getUpgrader(obj.getClass()).invoke(obj, map);
         }
         catch (ReflectiveOperationException e) {
-            throw new SerializationException(e.getMessage(), e.getCause());
+            throw new SerializationException(e.getMessage(), e);
         }
     }
 
