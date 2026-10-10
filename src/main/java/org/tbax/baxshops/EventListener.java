@@ -22,7 +22,10 @@ package org.tbax.baxshops;
 import com.google.common.base.Objects;
 import io.papermc.paper.event.player.PlayerOpenSignEvent;
 import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,9 +44,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.tbax.baxshops.items.ItemUtil;
-import org.tbax.baxshops.text.ChatComponent;
-import org.tbax.baxshops.text.ClickEvent;
-import org.tbax.baxshops.text.HoverEvent;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.CommandWarningException;
 import org.tbax.bukkit.errors.PrematureAbortException;
@@ -233,14 +233,14 @@ public class EventListener implements Listener
     public void onSignChange(SignChangeEvent event)
     {
         BaxShop shop = ShopPlugin.getShop(event.getBlock().getLocation());
-        if (shop != null) {
-            for(String line : event.getLines()) {
-                if (!line.isEmpty()) {
-                    return;
-                }
+        if (shop == null)
+            return;
+        for(Component line : event.lines()) {
+            if (line instanceof TextComponent c && !c.content().isEmpty()) {
+                return;
             }
-            event.setCancelled(true);
         }
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -248,12 +248,11 @@ public class EventListener implements Listener
     {
         StoredPlayer player = ShopPlugin.getState().joinPlayer(event.getPlayer());
         if (player.hasNotes()) {
-            ChatComponent.of("You have new notifications. Use ")
-                    .append(ChatComponent.of(Format.command("/shop notifications"))
-                            .hoverEvent(HoverEvent.showText(ChatColor.AQUA + "Show next notification"))
+            event.getPlayer().sendMessage(Component.text("You have new notifications. Use ")
+                    .append(FormatText.command("/shop notifications")
+                            .hoverEvent(HoverEvent.showText(Component.text("Show next notification", NamedTextColor.AQUA)))
                             .clickEvent(ClickEvent.runCommand("/shop notifications")))
-                    .append(" to view them")
-                    .sendTo(event.getPlayer());
+                    .append(Component.text(" to view them")));
         }
     }
 
@@ -270,10 +269,10 @@ public class EventListener implements Listener
                     ShopPlugin.logInfo(String.format("%s left shop %s", pl.getName(), s.getShop().getId().toString()));
                 }
                 if (s.isOwner()) {
-                    pl.sendMessage("[Left " + Format.username("your") + " shop]");
+                    pl.sendMessage(Component.text("[Left ").append(FormatText.username("your")).append(Component.text(" shop]")));
                 }
                 else {
-                    pl.sendMessage("[Left " + Format.username(s.getShop().getOwner().getName()) + "'s shop]");
+                    pl.sendMessage(Component.text("[Left ").append(FormatText.username(s.getShop().getOwner().getName())).append(Component.text("'s shop]")));
                 }
                 ShopPlugin.clearSelection(event.getPlayer());
             }
