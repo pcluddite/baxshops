@@ -30,12 +30,15 @@ import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.text.ChatTextColor;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Methods for formatting text components. Intended as a replacement for {@link Format}.
  */
 public class FormatText
 {
+    private static final Pattern UUID_PATTERN = Pattern.compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
+
     public static @NotNull Component money(@NotNull String amount)
     {
         return money(Component.text(amount));
@@ -438,5 +441,10 @@ public class FormatText
             sb.append(padChar);
         }
         return sb.toString();
+    }
+
+    public static boolean isUUID(@NotNull String str)
+    {
+        return UUID_PATTERN.matcher(str).matches();
     }
 }

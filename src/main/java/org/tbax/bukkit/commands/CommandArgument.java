@@ -20,9 +20,10 @@ package org.tbax.bukkit.commands;
 
 import org.bukkit.OfflinePlayer;
 import org.tbax.baxshops.Format;
+import org.tbax.baxshops.FormatText;
+import org.tbax.baxshops.ShopPlugin;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.ShopPlugin;
 import org.tbax.bukkit.serialization.StoredPlayer;
 
 import java.util.Arrays;
@@ -213,13 +214,7 @@ public class CommandArgument
 
     public boolean isUuid()
     {
-        try {
-            UUID.fromString(arg);
-            return true;
-        }
-        catch (IllegalArgumentException e) {
-            return false;
-        }
+        return FormatText.isUUID(arg);
     }
 
     public OfflinePlayer asPlayer() throws PrematureAbortException
