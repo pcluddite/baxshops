@@ -339,10 +339,10 @@ public class FormatText
 
         do {
             Component current = stack.pop();
-            result.add(current);
+            List<Component> children = current.children();
+            result.add(current.children(Collections.emptyList()));
 
             // Push children in reverse order so the final order matches recursion
-            List<Component> children = current.children();
             for (int i = children.size() - 1; i >= 0; --i) {
                 stack.push(children.get(i));
             }
@@ -397,7 +397,12 @@ public class FormatText
         List<Component> componentList = getAllComponents(component);
         TextComponent result = Component.empty();
         for (Component c : componentList) {
-            result = result.append(c.color(null));
+            if (c instanceof TextComponent current) {
+                result = result.append(Component.text(current.content()));
+            }
+            else {
+                result = result.append(c);
+            }
         }
         return result;
     }
