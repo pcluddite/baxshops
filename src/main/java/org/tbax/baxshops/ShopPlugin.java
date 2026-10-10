@@ -48,6 +48,7 @@ import org.tbax.bukkit.notification.Notification;
 import org.tbax.bukkit.notification.Request;
 import org.tbax.bukkit.serialization.StoredPlayer;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -115,7 +116,7 @@ public final class ShopPlugin extends JavaPlugin
             return commands;
         }
         catch (IllegalAccessException | InstantiationException e) {
-            log.log(Level.SEVERE, "Could not instantiate CommandMap", e);
+            logSevere("Could not instantiate CommandMap", e);
             return null;
         }
     }
@@ -308,11 +309,12 @@ public final class ShopPlugin extends JavaPlugin
         }
         else if (cmd.useAlternative(actor)) {
             try {
-                cmd = (ShopCommand)cmd.getAlternative().newInstance();
+                Constructor<? extends BaxCommand> ctor = cmd.getAlternative().getConstructor();
+                cmd = (ShopCommand)ctor.newInstance();
                 actor.setAction(cmd.getAction());
             }
-            catch (InstantiationException | IllegalAccessException | ClassCastException e) {
-                e.printStackTrace();
+            catch (ReflectiveOperationException e) {
+                logSevere("Unable to instantiate ShopCommand", e);
             }
         }
         return runCommand(cmd, actor);
@@ -412,6 +414,16 @@ public final class ShopPlugin extends JavaPlugin
         log.severe(Format.toAnsiColor(msg));
     }
 
+    public static void logSevere(Exception e)
+    {
+        logSevere(e.getMessage(), e);
+    }
+
+    public static void logSevere(String msg, Exception e)
+    {
+        log.log(Level.SEVERE, Format.toAnsiColor(msg), e);
+    }
+
     public static Collection<StoredPlayer> getRegisteredPlayers()
     {
         return state.getRegisteredPlayers();
@@ -460,7 +472,7 @@ public final class ShopPlugin extends JavaPlugin
             state = State.readFromDisk(this);
         }
         catch (Exception e) {
-            log.log(Level.SEVERE, "An exception occurred trying to read saved data. BaxShops cannot load.", e);
+            logSevere("An exception occurred trying to read saved data. BaxShops cannot load.", e);
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
