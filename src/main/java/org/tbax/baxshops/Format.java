@@ -326,8 +326,7 @@ public final class Format
             }
         }
         if (hasAnsi) {
-            sb.append((char)27);
-            sb.append("[0m"); // reset the color
+            sb.append(ChatTextColor.RESET.getAnsiColor()); // reset the color
         }
         return sb.toString();
     }

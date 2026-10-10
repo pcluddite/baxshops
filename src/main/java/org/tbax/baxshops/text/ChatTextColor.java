@@ -26,22 +26,22 @@ import org.tbax.baxshops.FormatText;
 
 public enum ChatTextColor
 {
-    BLACK       (0x000000, "30"),
-    DARK_BLUE   (0x0000AA, "34"),
-    DARK_GREEN  (0x00AA00, "32"),
-    DARK_AQUA   (0x00AAAA, "36"),
-    DARK_RED    (0xAA0000, "31"),
-    DARK_PURPLE (0xAA00AA, "35"),
-    GOLD        (0xFFAA00, "33"),
-    GRAY        (0xAAAAAA, "37"),
-    DARK_GRAY   (0x555555, "37"),
-    BLUE        (0x5555FF, "36"),
-    GREEN       (0x55FF55, "32"),
-    AQUA        (0x55FFFF, "36"),
-    RED         (0xFF5555, "31"),
-    LIGHT_PURPLE(0xFF55FF, "35"),
-    YELLOW      (0xFFFF55, "33"),
-    WHITE       (0xFFFFFF, "37"),
+    BLACK       (0x000000, "0;30"),
+    DARK_BLUE   (0x0000AA, "0;34"),
+    DARK_GREEN  (0x00AA00, "0;32"),
+    DARK_AQUA   (0x00AAAA, "0;36"),
+    DARK_RED    (0xAA0000, "0;31"),
+    DARK_PURPLE (0xAA00AA, "0;35"),
+    GOLD        (0xFFAA00, "0;33"),
+    GRAY        (0xAAAAAA, "0;37"),
+    DARK_GRAY   (0x555555, "0;37"),
+    BLUE        (0x5555FF, "0;36"),
+    GREEN       (0x55FF55, "0;32"),
+    AQUA        (0x55FFFF, "0;36"),
+    RED         (0xFF5555, "0;31"),
+    LIGHT_PURPLE(0xFF55FF, "0;35"),
+    YELLOW      (0xFFFF55, "0;33"),
+    WHITE       (0xFFFFFF, "0;37"),
     RESET       (0x000000, "0") {
         @Override
         public NamedTextColor getKyoriColor()
@@ -56,7 +56,7 @@ public enum ChatTextColor
     ChatTextColor(int hexColor, String ansiColor)
     {
         this.hexColor = hexColor;
-        this.ansiColor = (char)27 + "[0;" + ansiColor + "m";
+        this.ansiColor = (char)27 + "[" + ansiColor + "m";
     }
 
     public ChatColor getChatColor()
