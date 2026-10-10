@@ -21,12 +21,15 @@ package org.tbax.baxshops;
 
 import com.google.common.base.Objects;
 import io.papermc.paper.event.player.PlayerOpenSignEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -200,21 +203,23 @@ public class EventListener implements Listener
             if (!ShopPlugin.addLocation(event.getBlockPlaced().getLocation(), shop)) {
                 throw new CommandErrorException(Resources.SHOP_EXISTS);
             }
-            String[] lines = ItemUtil.extractSignText(item);
+            Component[] lines = ItemUtil.getSignText(item);
             if (lines.length > 0) {
                 Sign sign = (Sign) event.getBlockPlaced().getState();
+                SignSide side = sign.getSide(Side.FRONT);
                 if (lines.length < 3) {
-                    sign.setLine(0, "");
-                    sign.setLine(1, lines[0]);
-                    sign.setLine(2, lines.length > 1 ? lines[1] : "");
-                    sign.setLine(3, "");
-                } else {
-                    sign.setLine(0, lines[0]);
-                    sign.setLine(1, lines[1]);
-                    sign.setLine(2, lines[2]);
-                    sign.setLine(3, lines.length > 3 ? lines[3] : "");
+                    side.line(0, Component.empty());
+                    side.line(1, lines[0]);
+                    side.line(2, lines.length > 1 ? lines[1] : Component.empty());
+                    side.line(3, Component.empty());
                 }
-                sign.setEditable(true);
+                else {
+                    side.line(0, lines[0]);
+                    side.line(1, lines[1]);
+                    side.line(2, lines[2]);
+                    side.line(3, lines.length > 3 ? lines[3] : Component.empty());
+                }
+                sign.setWaxed(false);
                 sign.update();
             }
         }

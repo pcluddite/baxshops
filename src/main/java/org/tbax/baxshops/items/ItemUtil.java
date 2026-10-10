@@ -353,12 +353,18 @@ public final class ItemUtil
         return shop;
     }
 
-    public static String[] extractSignText(ItemStack item)
+    /**
+     * Gets the text of a sign from the {@code ItemStack} lore
+     * @param item the {@code ItemStack}
+     * @return an array of {@link Component} objects with the sign text
+     */
+    public static Component[] getSignText(ItemStack item)
     {
-        List<String> lore = item.getItemMeta().getLore().subList(0, item.getItemMeta().getLore().size() - 1);
-        String[] lines = new String[lore.size()];
+        List<Component> lore = item.getItemMeta().lore();
+        lore = lore.subList(0, lore.size() - 1); // last line of lore is the UUID
+        Component[] lines = new Component[lore.size()];
         for (int i = 0; i < lines.length; ++i) {
-            lines[i] = ChatColor.stripColor(lore.get(i));
+            lines[i] = lore.get(i);
         }
         return lines;
     }
