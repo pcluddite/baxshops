@@ -28,6 +28,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.text.ChatTextColor;
+import org.tbax.baxshops.text.ChatTextStyle;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -379,7 +380,7 @@ public class FormatText
         return sb.toString();
     }
 
-    public static String componentToString(@NotNull TextComponent component)
+    public static @NotNull String componentToString(@NotNull TextComponent component)
     {
         List<Component> componentList = getAllComponents(component);
         StringBuilder sb = new StringBuilder();
@@ -399,6 +400,32 @@ public class FormatText
             result = result.append(c.color(null));
         }
         return result;
+    }
+
+    public static @NotNull String toChatString(@NotNull Component component)
+    {
+        List<Component> componentList = getAllComponents(component);
+        StringBuilder sb = new StringBuilder();
+        for (Component c : componentList) {
+            if (!(c instanceof TextComponent current))
+                continue;
+
+            if (current.color() != null) {
+                try {
+                    sb.append(ChatTextColor.getChatTextColor(current.color()));
+                }
+                catch (IllegalArgumentException e) {
+                    sb.append(ChatTextColor.WHITE.getChatColor());
+                }
+            }
+
+            for (Map.Entry<TextDecoration, TextDecoration.State> entry : current.decorations().entrySet()) {
+                if (entry.getValue() == TextDecoration.State.TRUE) {
+                    sb.append(ChatTextStyle.valueOf(entry.getKey().name()).getChatColorStyle());
+                }
+            }
+        }
+        return sb.toString();
     }
 
     public static @NotNull String toHexString(int value)
