@@ -385,7 +385,7 @@ public class FormatText
         List<Component> componentList = flattenComponents(component);
         StringBuilder sb = new StringBuilder();
         for(Component c : componentList) {
-            if(c instanceof TextComponent current) {
+            if (c instanceof TextComponent current) {
                 sb.append(current.content());
             }
         }
@@ -398,7 +398,9 @@ public class FormatText
         TextComponent result = Component.empty();
         for (Component c : componentList) {
             if (c instanceof TextComponent current) {
-                result = result.append(Component.text(Format.stripColor(current.content())));
+                if (!current.content().isEmpty()) {
+                    result = result.append(Component.text(Format.stripColor(current.content())));
+                }
             }
             else {
                 result = result.append(c);
