@@ -398,7 +398,7 @@ public class FormatText
         TextComponent result = Component.empty();
         for (Component c : componentList) {
             if (c instanceof TextComponent current) {
-                result = result.append(Component.text(current.content()));
+                result = result.append(Component.text(Format.stripColor(current.content())));
             }
             else {
                 result = result.append(c);
