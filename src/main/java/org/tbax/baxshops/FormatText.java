@@ -331,7 +331,7 @@ public class FormatText
         return Format.toFriendlyName(name);
     }
 
-    private static @NotNull List<Component> getAllComponents(@NotNull Component component) {
+    private static @NotNull List<Component> flattenComponents(@NotNull Component component) {
         List<Component> result = new ArrayList<>();
         Deque<Component> stack = new ArrayDeque<>();
 
@@ -356,7 +356,7 @@ public class FormatText
     {
         StringBuilder sb = new StringBuilder();
         boolean hasAnsi = false;
-        List<Component> componentList = getAllComponents(component);
+        List<Component> componentList = flattenComponents(component);
         for(Component c : componentList) {
             if (!(c instanceof TextComponent current))
                 continue;
@@ -382,7 +382,7 @@ public class FormatText
 
     public static @NotNull String componentToString(@NotNull TextComponent component)
     {
-        List<Component> componentList = getAllComponents(component);
+        List<Component> componentList = flattenComponents(component);
         StringBuilder sb = new StringBuilder();
         for(Component c : componentList) {
             if(c instanceof TextComponent current) {
@@ -394,7 +394,7 @@ public class FormatText
 
     public static @NotNull Component stripColor(@NotNull Component component)
     {
-        List<Component> componentList = getAllComponents(component);
+        List<Component> componentList = flattenComponents(component);
         TextComponent result = Component.empty();
         for (Component c : componentList) {
             if (c instanceof TextComponent current) {
@@ -409,7 +409,7 @@ public class FormatText
 
     public static @NotNull String toChatString(@NotNull Component component)
     {
-        List<Component> componentList = getAllComponents(component);
+        List<Component> componentList = flattenComponents(component);
         StringBuilder sb = new StringBuilder();
         for (Component c : componentList) {
             if (!(c instanceof TextComponent current))
