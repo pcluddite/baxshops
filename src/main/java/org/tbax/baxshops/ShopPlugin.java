@@ -19,6 +19,7 @@
  */
 package org.tbax.baxshops;
 
+import net.kyori.adventure.text.Component;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,6 +39,7 @@ import org.tbax.baxshops.serialization.BaxConfig;
 import org.tbax.baxshops.serialization.State;
 import org.tbax.baxshops.serialization.StateFile;
 import org.tbax.baxshops.text.ChatComponent;
+import org.tbax.baxshops.text.ChatTextColor;
 import org.tbax.baxshops.text.ClickEvent;
 import org.tbax.baxshops.text.HoverEvent;
 import org.tbax.bukkit.commands.BaxCommand;
@@ -375,23 +377,58 @@ public final class ShopPlugin extends JavaPlugin
         }
     }
 
+    public static void sendInfo(@NotNull CommandSender sender, Component message)
+    {
+        sendMessage(sender, message);
+        if (stateFile.getConfig().isLogNotes() && sender instanceof Player) {
+            logPlayerMessage((Player)sender, message);
+        }
+    }
+
+    public static void sendInfo(@NotNull CommandSender sender, Component[] message)
+    {
+        for (Component line : message) {
+            sendInfo(sender, line);
+        }
+    }
+
     public static void sendMessage(@NotNull CommandSender sender, String message)
     {
         sender.sendMessage(Format.wordWrap(message));
+    }
+
+    public static void sendMessage(@NotNull CommandSender sender, Component message)
+    {
+        sender.sendMessage(FormatText.wordWrap(message));
     }
 
     public static void logPlayerMessage(Player pl, String message)
     {
         StringBuilder sb = new StringBuilder();
         if (pl != null) {
-            sb.append((char)27).append("[0;35m");
-            sb.append("[");
-            sb.append(pl.getName()).append("] ");
-            sb.append((char)27);
-            sb.append("[0m");
+            sb = appendPlayerName(sb, pl.getName());
         }
         sb.append(Format.toAnsiColor(message));
         log.info(sb.toString());
+    }
+
+    public static void logPlayerMessage(Player pl, Component message)
+    {
+        StringBuilder sb = new StringBuilder();
+        if (pl != null) {
+            sb = appendPlayerName(sb, pl.getName());
+        }
+        sb.append(FormatText.toAnsiColor(message));
+        log.info(sb.toString());
+    }
+
+    private static StringBuilder appendPlayerName(StringBuilder sb, String playerName)
+    {
+        sb.append(ChatTextColor.DARK_PURPLE.getAnsiColor());
+        sb.append('[').append(playerName).append(']');
+        sb.append(' ');
+        sb.append(ChatTextColor.RESET.getAnsiColor());
+        return sb;
     }
 
     public static State getState()
