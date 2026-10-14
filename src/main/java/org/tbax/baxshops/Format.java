@@ -302,7 +302,8 @@ public final class Format
         }
         return sb.toString();
     }
-    
+
+    @Deprecated
     public static @NotNull String toAnsiColor(@NotNull String message)
     {
         StringBuilder sb = new StringBuilder();
@@ -405,6 +406,7 @@ public final class Format
         return count;
     }
 
+    @Deprecated
     public static @NotNull String wordWrap(String input)
     {
         final int MAX_LINE_LENGTH = 50;
