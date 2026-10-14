@@ -23,6 +23,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
@@ -352,7 +353,7 @@ public class FormatText
         return result;
     }
 
-    public static @NotNull String toAnsiColor(@NotNull TextComponent component)
+    public static @NotNull String toAnsiColor(@NotNull Component component)
     {
         StringBuilder sb = new StringBuilder();
         boolean hasAnsi = false;
@@ -380,7 +381,7 @@ public class FormatText
         return sb.toString();
     }
 
-    public static @NotNull String componentToString(@NotNull TextComponent component)
+    public static @NotNull String extractText(@NotNull Component component)
     {
         List<Component> componentList = flattenComponents(component);
         StringBuilder sb = new StringBuilder();
@@ -434,6 +435,73 @@ public class FormatText
         }
         return sb.toString();
     }
+
+    public static @NotNull Component wordWrap(Component input)
+    {
+        final int MAX_LINE_LENGTH = 50;
+        return wordWrap(input, MAX_LINE_LENGTH);
+    }
+
+    public static @NotNull Component wordWrap(Component input, int maxLineLength) {
+        List<Component> output = new ArrayList<>();
+        StringBuilder currentWord = new StringBuilder();
+        Style currentStyle = Style.empty();
+
+        int lineLength = 0;
+        int wordLength = 0;
+
+        List<Component> segments = flattenComponents(input);
+
+        for (Component segment : segments) {
+            String text = extractText(segment);
+            Style style = segment.style();
+
+            for (int i = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+
+                if (Character.isWhitespace(c)) {
+                    // Wrap if needed
+                    if (lineLength + wordLength > maxLineLength) {
+                        output.add(Component.newline());
+                        lineLength = 0;
+                    }
+
+                    // Emit the word
+                    if (!currentWord.isEmpty()) {
+                        output.add(Component.text(currentWord.toString(), currentStyle));
+                    }
+
+                    // Emit the whitespace
+                    output.add(Component.text(String.valueOf(c), style));
+
+                    lineLength += wordLength;
+                    currentWord.setLength(0);
+                    wordLength = 0;
+                    currentStyle = style;
+                }
+                else {
+                    // Continue building the word
+                    currentWord.append(c);
+                    wordLength++;
+                    currentStyle = style;
+                }
+            }
+        }
+
+        // Emit final word
+        if (!currentWord.isEmpty()) {
+            output.add(Component.text(currentWord.toString(), currentStyle));
+        }
+
+        // Combine into a single component
+        Component result = Component.empty();
+        for (Component c : output) {
+            result = result.append(c);
+        }
+
+        return result;
+    }
+
 
     public static @NotNull String toHexString(int value)
     {
