@@ -21,9 +21,9 @@ package org.tbax.bukkit.commands;
 import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.chat.SignedMessage;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -115,7 +115,7 @@ public interface CmdActor extends CommandSender
 
     default String getAction()
     {
-        return getArgs().size() > 0 ? getArg(0).asString().toLowerCase() : "";
+        return getArgs().isEmpty() ? "" : getArg(0).asString().toLowerCase();
     }
 
     CommandArgument getArg(int index);
@@ -259,12 +259,14 @@ public interface CmdActor extends CommandSender
     }
 
     @Override
+    @Deprecated
     default void sendMessage(@Nullable UUID sender, @NotNull String message)
     {
         getSender().sendMessage(sender, message);
     }
 
     @Override
+    @Deprecated
     default void sendMessage(@Nullable UUID sender, @NotNull String... messages)
     {
         getSender().sendMessage(sender, messages);
@@ -278,12 +280,12 @@ public interface CmdActor extends CommandSender
 
     default void sendError(String msg)
     {
-        ShopPlugin.sendInfo(getSender(), ChatColor.RED + msg);
+        ShopPlugin.sendInfo(getSender(), Component.text(msg, NamedTextColor.RED));
     }
 
     default void sendError(String format, Object... args)
     {
-        ShopPlugin.sendInfo(getSender(), ChatColor.RED + String.format(format, args));
+        ShopPlugin.sendInfo(getSender(), Component.text(String.format(format, args), NamedTextColor.RED));
     }
 
     @Override
@@ -308,12 +310,12 @@ public interface CmdActor extends CommandSender
 
     default void sendWarning(String msg)
     {
-        ShopPlugin.sendInfo(getSender(), ChatColor.GOLD + msg);
+        ShopPlugin.sendInfo(getSender(), Component.text(msg, NamedTextColor.GOLD));
     }
 
     default void sendWarning(String format, Object... args)
     {
-        ShopPlugin.sendInfo(getSender(), ChatColor.GOLD + String.format(format, args));
+        ShopPlugin.sendInfo(getSender(), Component.text(String.format(format, args), NamedTextColor.GOLD));
     }
 
     default void setAction(String action)
@@ -349,13 +351,13 @@ public interface CmdActor extends CommandSender
     @Override
     default @NotNull Component name()
     {
-        return null;
+        return getSender().name();
     }
 
     @Override
     default void sendMessage(@NotNull Component message)
     {
-        getSender().sendMessage(message);
+        ShopPlugin.sendInfo(getSender(), message);
     }
 
     @Override
