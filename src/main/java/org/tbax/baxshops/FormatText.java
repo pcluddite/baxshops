@@ -332,7 +332,7 @@ public class FormatText
         return Format.toFriendlyName(name);
     }
 
-    private static @NotNull List<Component> flattenComponents(@NotNull Component component) {
+    private static @NotNull List<Component> flattenComponent(@NotNull Component component) {
         List<Component> result = new ArrayList<>();
         Deque<Component> stack = new ArrayDeque<>();
 
@@ -357,7 +357,7 @@ public class FormatText
     {
         StringBuilder sb = new StringBuilder();
         boolean hasAnsi = false;
-        List<Component> componentList = flattenComponents(component);
+        List<Component> componentList = flattenComponent(component);
         for(Component c : componentList) {
             if (!(c instanceof TextComponent current))
                 continue;
@@ -383,7 +383,7 @@ public class FormatText
 
     public static @NotNull String extractText(@NotNull Component component)
     {
-        List<Component> componentList = flattenComponents(component);
+        List<Component> componentList = flattenComponent(component);
         StringBuilder sb = new StringBuilder();
         for(Component c : componentList) {
             if (c instanceof TextComponent current) {
@@ -395,7 +395,7 @@ public class FormatText
 
     public static @NotNull Component stripColor(@NotNull Component component)
     {
-        List<Component> componentList = flattenComponents(component);
+        List<Component> componentList = flattenComponent(component);
         TextComponent result = Component.empty();
         for (Component c : componentList) {
             if (c instanceof TextComponent current) {
@@ -412,7 +412,7 @@ public class FormatText
 
     public static @NotNull String toChatString(@NotNull Component component)
     {
-        List<Component> componentList = flattenComponents(component);
+        List<Component> componentList = flattenComponent(component);
         StringBuilder sb = new StringBuilder();
         for (Component c : componentList) {
             if (!(c instanceof TextComponent current))
@@ -450,7 +450,7 @@ public class FormatText
         int lineLength = 0;
         int wordLength = 0;
 
-        List<Component> segments = flattenComponents(input);
+        List<Component> segments = flattenComponent(input);
 
         for (Component segment : segments) {
             String text = extractText(segment);
