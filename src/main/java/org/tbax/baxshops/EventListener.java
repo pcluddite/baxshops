@@ -100,7 +100,7 @@ public class EventListener implements Listener
         }
         catch (PrematureAbortException e) {
             event.setCancelled(true);
-            ShopPlugin.sendMessage(event.getPlayer(), e.getMessage());
+            ShopPlugin.sendMessage(event.getPlayer(), e.getComponent());
         }
     }
 
@@ -225,7 +225,7 @@ public class EventListener implements Listener
         }
         catch (PrematureAbortException e) {
             event.setCancelled(true);
-            ShopPlugin.sendMessage(event.getPlayer(), e.getMessage());
+            ShopPlugin.sendMessage(event.getPlayer(), e.getComponent());
         }
     }
     

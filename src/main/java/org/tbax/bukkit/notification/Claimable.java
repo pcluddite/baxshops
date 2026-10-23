@@ -41,7 +41,7 @@ public interface Claimable extends Notification
             return true;
         }
         catch (PrematureAbortException e) {
-            actor.sendMessage(e.getMessage());
+            actor.sendMessage(e.getComponent());
             return false;
         }
     }

@@ -23,13 +23,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.*;
+import org.tbax.bukkit.MathUtil;
 import org.tbax.bukkit.commands.CmdActor;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.Resources;
-import org.tbax.baxshops.ShopPlugin;
 import org.tbax.bukkit.notification.Request;
 import org.tbax.bukkit.notification.StandardNote;
-import org.tbax.bukkit.MathUtil;
 
 import java.util.Map;
 import java.util.UUID;
@@ -75,7 +73,7 @@ public final class BuyRequest extends StandardNote implements Request
             return true;
         }
         catch (PrematureAbortException e) {
-            acceptingActor.sendMessage(e.getMessage());
+            acceptingActor.sendMessage(e.getComponent());
             return false;
         }
     }

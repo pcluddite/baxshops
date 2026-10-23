@@ -26,17 +26,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.tbax.baxshops.items.ItemUtil;
+import org.tbax.baxshops.notification.DeletedShopClaim;
+import org.tbax.baxshops.notification.SaleClaim;
+import org.tbax.baxshops.versioning.LegacyPlayerUtil;
+import org.tbax.bukkit.MathUtil;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.CommandWarningException;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.notification.DeletedShopClaim;
-import org.tbax.baxshops.notification.SaleClaim;
-import org.tbax.baxshops.items.ItemUtil;
 import org.tbax.bukkit.serialization.StoredPlayer;
-import org.tbax.baxshops.versioning.LegacyPlayerUtil;
-import org.tbax.bukkit.MathUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Methods for dealing with interactions with players
@@ -158,11 +161,11 @@ public final class PlayerUtil
             return true;
         }
         catch (CommandErrorException | CommandWarningException e) {
-            ShopPlugin.sendMessage(player, e.getMessage());
+            ShopPlugin.sendMessage(player, e.getComponent());
             return false;
         }
         catch (PrematureAbortException e) {
-            ShopPlugin.sendMessage(player, e.getMessage());
+            ShopPlugin.sendMessage(player, e.getComponent());
             return true;
         }
     }

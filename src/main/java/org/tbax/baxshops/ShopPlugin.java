@@ -352,7 +352,7 @@ public final class ShopPlugin extends JavaPlugin
             }
         }
         catch(PrematureAbortException e) {
-            sendInfo(actor.getSender(), e.getMessage());
+            sendInfo(actor.getSender(), e.getComponent());
         }
         return true;
     }

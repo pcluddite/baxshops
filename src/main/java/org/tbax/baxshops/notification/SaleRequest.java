@@ -61,7 +61,7 @@ public final class SaleRequest extends StandardNote implements Request
             return true;
         }
         catch (PrematureAbortException e) {
-            acceptingActor.sendMessage(e.getMessage());
+            acceptingActor.sendMessage(e.getComponent());
             return false;
         }
     }

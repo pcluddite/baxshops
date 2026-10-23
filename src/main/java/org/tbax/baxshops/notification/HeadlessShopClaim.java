@@ -28,12 +28,12 @@ import org.tbax.baxshops.BaxEntry;
 import org.tbax.baxshops.BaxShop;
 import org.tbax.baxshops.PlayerUtil;
 import org.tbax.baxshops.Resources;
-import org.tbax.bukkit.commands.CmdActor;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.items.ItemUtil;
-import org.tbax.bukkit.notification.Claimable;
 import org.tbax.baxshops.serialization.UpgradeableSerializable;
 import org.tbax.baxshops.serialization.UpgradeableSerialization;
+import org.tbax.bukkit.commands.CmdActor;
+import org.tbax.bukkit.errors.PrematureAbortException;
+import org.tbax.bukkit.notification.Claimable;
 import org.tbax.bukkit.serialization.annotations.DoNotSerialize;
 
 import java.util.Date;
@@ -75,7 +75,7 @@ public class HeadlessShopClaim implements Claimable, UpgradeableSerializable
             stack = PlayerUtil.findSign(actor.getPlayer());
         }
         catch (PrematureAbortException e) {
-            actor.sendMessage(e.getMessage());
+            actor.sendMessage(e.getComponent());
             return false;
         }
         if (stack != null) {
