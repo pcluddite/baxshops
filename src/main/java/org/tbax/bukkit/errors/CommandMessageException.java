@@ -18,6 +18,7 @@
  */
 package org.tbax.bukkit.errors;
 
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
@@ -37,5 +38,11 @@ public final class CommandMessageException extends PrematureAbortException
     public @NotNull String getMessage()
     {
         return super.getMessage();
+    }
+
+    @Override
+    public @NotNull Component getComponent()
+    {
+        return Component.text(super.getMessage());
     }
 }

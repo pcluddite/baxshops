@@ -18,6 +18,9 @@
  */
 package org.tbax.bukkit.errors;
 
+import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
+
 public abstract class PrematureAbortException extends Exception
 {
     public PrematureAbortException()
@@ -38,4 +41,6 @@ public abstract class PrematureAbortException extends Exception
     {
         super(message, cause);
     }
+
+    public abstract @NotNull Component getComponent();
 }

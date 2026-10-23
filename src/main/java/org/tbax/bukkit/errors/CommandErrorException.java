@@ -18,8 +18,10 @@
  */
 package org.tbax.bukkit.errors;
 
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.tbax.baxshops.Format;
+import org.tbax.baxshops.FormatText;
 
 @SuppressWarnings("unused")
 public final class CommandErrorException extends PrematureAbortException
@@ -38,5 +40,11 @@ public final class CommandErrorException extends PrematureAbortException
     public @NotNull String getMessage()
     {
         return Format.error(super.getMessage());
+    }
+
+    @Override
+    public @NotNull Component getComponent()
+    {
+        return FormatText.error(super.getMessage());
     }
 }
