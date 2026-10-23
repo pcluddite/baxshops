@@ -28,6 +28,7 @@ import org.tbax.bukkit.errors.PrematureAbortException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class BaxCommand implements TabCompleter
 {
@@ -78,5 +79,29 @@ public abstract class BaxCommand implements TabCompleter
                                       @NotNull String alias, List<? extends CommandArgument> args)
     {
         return Collections.emptyList();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getCommand(), getAction());
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof BaxCommand other) {
+            return equals(other);
+        }
+        return false;
+    }
+
+    public boolean equals(BaxCommand other)
+    {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (other.getClass() != getClass()) return false;
+        return Objects.equals(other.getCommand(), getCommand())
+                && Objects.equals(other.getAction(), getAction());
     }
 }
