@@ -28,14 +28,11 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.tbax.baxshops.text.ChatTextColor;
 import org.tbax.baxshops.text.ChatTextStyle;
+import org.tbax.bukkit.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -336,25 +333,36 @@ public class FormatText
         return Format.toFriendlyName(name);
     }
 
-    private static @NotNull List<Component> flattenComponent(@NotNull Component component) {
-        List<Component> list = new ArrayList<>();
-        flattenComponent(component, list, component.style());
-        return list;
-    }
+    private static @NotNull List<Component> flattenComponent(@NotNull Component component)
+    {
+        List<Component> result = new ArrayList<>();
+        Deque<Pair<Component, Style>> stack = new ArrayDeque<>();
+        stack.push(new Pair<>(component, component.style()));
 
-    private static void flattenComponent(@NotNull Component component, @NotNull List<Component> out,
-                                         @Nullable Style inherited) {
-        Style merged = inherited.merge(component.style());
+        while (!stack.isEmpty()) {
+            Pair<Component, Style> entry = stack.pop();
+            Component comp = entry.getFirst();
+            Style inherited = entry.getSecond();
 
-        if (component instanceof TextComponent tc) {
-            if (!tc.content().isEmpty()) {
-                out.add(Component.text(tc.content(), merged));
+            // merged = inherited.merge(comp.style())
+            Style merged = (inherited == null ? Style.empty() : inherited).merge(comp.style());
+
+            if (comp instanceof TextComponent tc) {
+                if (!tc.content().isEmpty()) {
+                    result.add(Component.text(tc.content(), merged));
+                }
+            }
+
+            // push children in reverse order so they are processed in original order
+            List<Component> children = comp.children();
+            for (int i = children.size() - 1; i >= 0; --i) {
+                Component child = children.get(i);
+                // pass merged as the inherited style for the child (same as recursive)
+                stack.push(new Pair<>(child, merged));
             }
         }
 
-        for (Component child : component.children()) {
-            flattenComponent(child, out, merged);
-        }
+        return result;
     }
 
     public static @NotNull String toAnsiColor(@NotNull Component component)
