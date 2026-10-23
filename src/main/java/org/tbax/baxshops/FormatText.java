@@ -283,14 +283,14 @@ public class FormatText
      * @param title the text in the header
      * @return the chat header
      */
-    public static @NotNull Component header(String title)
+    public static @NotNull Component header(@NotNull String title)
     {
         return Component.text("------------ ", NamedTextColor.GRAY)
                 .append(Component.text(title, NamedTextColor.WHITE))
                 .append(Component.text(" ------------", NamedTextColor.GRAY));
     }
 
-    public static @NotNull Component header(int page, int maxPages, String command)
+    public static @NotNull Component header(int page, int maxPages, @NotNull String command)
     {
         Component text = Component.text("", NamedTextColor.GRAY);
         if (page > 1) {
@@ -316,22 +316,22 @@ public class FormatText
         return text;
     }
 
-    public static @NotNull String listOr(List<? extends CharSequence> elements)
+    public static @NotNull String listOr(@NotNull List<? extends CharSequence> elements)
     {
         return Format.listOr(elements);
     }
 
-    public static @NotNull String listAnd(List<? extends CharSequence> elements)
+    public static @NotNull String listAnd(@NotNull List<? extends CharSequence> elements)
     {
         return Format.listAnd(elements);
     }
 
-    public static String toNumeral(int n)
+    public static @NotNull String toNumeral(int n)
     {
         return Format.toNumeral(n);
     }
 
-    public static String toFriendlyName(String name)
+    public static @NotNull String toFriendlyName(@NotNull String name)
     {
         return Format.toFriendlyName(name);
     }
@@ -440,13 +440,13 @@ public class FormatText
         return sb.toString();
     }
 
-    public static @NotNull Component wordWrap(Component input)
+    public static @NotNull Component wordWrap(@NotNull Component input)
     {
         final int MAX_LINE_LENGTH = 50;
         return wordWrap(input, MAX_LINE_LENGTH);
     }
 
-    public static @NotNull Component wordWrap(Component input, int maxLineLength) {
+    public static @NotNull Component wordWrap(@NotNull Component input, int maxLineLength) {
         List<Component> output = new ArrayList<>();
         StringBuilder currentWord = new StringBuilder();
         Style currentStyle = Style.empty();
