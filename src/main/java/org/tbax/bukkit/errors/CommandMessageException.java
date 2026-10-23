@@ -41,6 +41,12 @@ public final class CommandMessageException extends PrematureAbortException
     }
 
     @Override
+    public @NotNull String getFormattedMessage()
+    {
+        return super.getMessage();
+    }
+
+    @Override
     public @NotNull Component getComponent()
     {
         return Component.text(super.getMessage());

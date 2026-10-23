@@ -43,6 +43,12 @@ public final class CommandWarningException extends PrematureAbortException
     }
 
     @Override
+    public @NotNull String getFormattedMessage()
+    {
+        return Format.warning(super.getMessage());
+    }
+
+    @Override
     public @NotNull Component getComponent()
     {
         return FormatText.warning(super.getMessage());

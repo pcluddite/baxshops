@@ -43,6 +43,12 @@ public final class CommandErrorException extends PrematureAbortException
     }
 
     @Override
+    public @NotNull String getFormattedMessage()
+    {
+        return Format.error(super.getMessage());
+    }
+
+    @Override
     public @NotNull Component getComponent()
     {
         return FormatText.error(super.getMessage());

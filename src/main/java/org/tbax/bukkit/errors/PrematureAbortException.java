@@ -42,5 +42,7 @@ public abstract class PrematureAbortException extends Exception
         super(message, cause);
     }
 
+    public abstract @NotNull String getFormattedMessage();
+
     public abstract @NotNull Component getComponent();
 }
