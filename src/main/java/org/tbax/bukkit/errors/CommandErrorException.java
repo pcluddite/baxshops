@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2019 Timothy Baxendale
+ * Copyright (C) 2013-2026 Timothy Baxendale
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,27 +24,19 @@ import org.tbax.baxshops.Format;
 @SuppressWarnings("unused")
 public final class CommandErrorException extends PrematureAbortException
 {
-    private Exception innerEx;
-    private String errMsg;
-
-    public CommandErrorException(@NotNull String errorMsg)
+    public CommandErrorException(@NotNull String message)
     {
-        errMsg = errorMsg;
+        super(message);
     }
 
-    public CommandErrorException(Exception e, @NotNull String errorMsg)
+    public CommandErrorException(@NotNull String message, Throwable cause)
     {
-        innerEx = e;
-        errMsg = errorMsg;
+        super(message, cause);
     }
 
-    public Exception getInnerException()
-    {
-        return innerEx;
-    }
-
+    @Override
     public @NotNull String getMessage()
     {
-        return Format.error(errMsg);
+        return Format.error(super.getMessage());
     }
 }

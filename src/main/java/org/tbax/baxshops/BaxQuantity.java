@@ -21,9 +21,9 @@ package org.tbax.baxshops;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.tbax.baxshops.versioning.LegacyPlayerUtil;
 import org.tbax.bukkit.errors.CommandErrorException;
 import org.tbax.bukkit.errors.PrematureAbortException;
-import org.tbax.baxshops.versioning.LegacyPlayerUtil;
 
 import java.util.Arrays;
 
@@ -96,7 +96,7 @@ public class BaxQuantity
                 }
                 return stack.getMaxStackSize() - playerStack.getAmount();
             }
-            throw new CommandErrorException(e, "'" + argument + "' is not a valid quantity");
+            throw new CommandErrorException("'" + argument + "' is not a valid quantity", e);
         }
     }
 

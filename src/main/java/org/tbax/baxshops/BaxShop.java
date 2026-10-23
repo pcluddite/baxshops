@@ -27,17 +27,17 @@ import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-import org.tbax.bukkit.errors.CommandErrorException;
-import org.tbax.bukkit.errors.PrematureAbortException;
 import org.tbax.baxshops.items.ItemUtil;
-import org.tbax.bukkit.serialization.SafeMap;
-import org.tbax.bukkit.serialization.StoredPlayer;
 import org.tbax.baxshops.serialization.UpgradeableSerializable;
 import org.tbax.baxshops.serialization.UpgradeableSerialization;
-import org.tbax.bukkit.serialization.annotations.DoNotSerialize;
-import org.tbax.bukkit.serialization.annotations.SerializeMethod;
 import org.tbax.baxshops.serialization.states.StateLoader_00300;
 import org.tbax.baxshops.serialization.states.StateLoader_00420;
+import org.tbax.bukkit.errors.CommandErrorException;
+import org.tbax.bukkit.errors.PrematureAbortException;
+import org.tbax.bukkit.serialization.SafeMap;
+import org.tbax.bukkit.serialization.StoredPlayer;
+import org.tbax.bukkit.serialization.annotations.DoNotSerialize;
+import org.tbax.bukkit.serialization.annotations.SerializeMethod;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -661,7 +661,7 @@ public class BaxShop implements UpgradeableSerializable, Collection<BaxEntry>
             }
         }
         catch (IndexOutOfBoundsException e) {
-            throw new CommandErrorException(e, errMsg);
+            throw new CommandErrorException(errMsg, e);
         }
         if (entry == null) {
             throw new CommandErrorException(errMsg);

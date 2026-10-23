@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2019 Timothy Baxendale
+ * Copyright (C) 2013-2026 Timothy Baxendale
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,27 +23,19 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("unused")
 public final class CommandMessageException extends PrematureAbortException
 {
-    private Exception innerEx;
-    private String errMsg;
-
-    public CommandMessageException(@NotNull String errorMsg)
+    public CommandMessageException(@NotNull String message)
     {
-        errMsg = errorMsg;
+        super(message);
     }
 
-    public CommandMessageException(Exception e, @NotNull String errorMsg)
+    public CommandMessageException(@NotNull String message, Throwable cause)
     {
-        innerEx = e;
-        errMsg = errorMsg;
+        super(message, cause);
     }
 
-    public Exception getInnerException()
-    {
-        return innerEx;
-    }
-
+    @Override
     public @NotNull String getMessage()
     {
-        return errMsg;
+        return super.getMessage();
     }
 }

@@ -56,7 +56,7 @@ public class CommandArgument
             return Integer.parseInt(arg);
         }
         catch(NumberFormatException e) {
-            throw new CommandErrorException(e, errMsg);
+            throw new CommandErrorException(errMsg, e);
         }
     }
     
@@ -82,7 +82,7 @@ public class CommandArgument
             return Long.parseLong(arg);
         }
         catch(NumberFormatException e) {
-            throw new CommandErrorException(e, errMsg);
+            throw new CommandErrorException(errMsg, e);
         }
     }
 
@@ -108,7 +108,7 @@ public class CommandArgument
             return Short.parseShort(arg);
         }
         catch(NumberFormatException e) {
-            throw new CommandErrorException(e, errMsg);
+            throw new CommandErrorException(errMsg, e);
         }
     }
 
@@ -134,7 +134,7 @@ public class CommandArgument
             return Double.parseDouble(arg);
         }
         catch(NumberFormatException e) {
-            throw new CommandErrorException(e, errMsg);
+            throw new CommandErrorException(errMsg, e);
         }
     }
 
@@ -208,7 +208,7 @@ public class CommandArgument
             return UUID.fromString(arg);
         }
         catch (IllegalArgumentException e) {
-            throw new CommandErrorException(e, errMsg);
+            throw new CommandErrorException(errMsg, e);
         }
     }
 
