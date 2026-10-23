@@ -28,10 +28,14 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.tbax.baxshops.text.ChatTextColor;
 import org.tbax.baxshops.text.ChatTextStyle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -333,24 +337,24 @@ public class FormatText
     }
 
     private static @NotNull List<Component> flattenComponent(@NotNull Component component) {
-        List<Component> result = new ArrayList<>();
-        Deque<Component> stack = new ArrayDeque<>();
+        List<Component> list = new ArrayList<>();
+        flattenComponent(component, list, component.style());
+        return list;
+    }
 
-        stack.push(component);
+    private static void flattenComponent(@NotNull Component component, @NotNull List<Component> out,
+                                         @Nullable Style inherited) {
+        Style merged = inherited.merge(component.style());
 
-        do {
-            Component current = stack.pop();
-            List<Component> children = current.children();
-            result.add(current.children(Collections.emptyList()));
-
-            // Push children in reverse order so the final order matches recursion
-            for (int i = children.size() - 1; i >= 0; --i) {
-                stack.push(children.get(i));
+        if (component instanceof TextComponent tc) {
+            if (!tc.content().isEmpty()) {
+                out.add(Component.text(tc.content(), merged));
             }
         }
-        while (!stack.isEmpty());
 
-        return result;
+        for (Component child : component.children()) {
+            flattenComponent(child, out, merged);
+        }
     }
 
     public static @NotNull String toAnsiColor(@NotNull Component component)
