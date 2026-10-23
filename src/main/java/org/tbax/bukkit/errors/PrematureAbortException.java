@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2019 Timothy Baxendale
+ * Copyright (C) 2013-2026 Timothy Baxendale
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,4 +20,22 @@ package org.tbax.bukkit.errors;
 
 public abstract class PrematureAbortException extends Exception
 {
+    public PrematureAbortException()
+    {
+    }
+
+    public PrematureAbortException(String message)
+    {
+        super(message);
+    }
+
+    public PrematureAbortException(Throwable cause)
+    {
+        super(cause);
+    }
+
+    public PrematureAbortException(String message, Throwable cause)
+    {
+        super(message, cause);
+    }
 }
