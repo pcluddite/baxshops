@@ -283,8 +283,7 @@ public class EventListener implements Listener
     public void onPlayerSignOpen(PlayerOpenSignEvent event)
     {
         if (event.getCause() == PlayerOpenSignEvent.Cause.INTERACT) {
-            BaxShop shop = ShopPlugin.getShop(event.getSign().getLocation().getBlock().getLocation());
-            if (shop != null) {
+            if (ShopPlugin.getShop(event.getSign()) != null) {
                 event.setCancelled(true);
             }
         }

@@ -25,6 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -291,6 +292,11 @@ public final class ShopPlugin extends JavaPlugin
     public static BaxShop getShop(Location location)
     {
         return state.getShop(location);
+    }
+
+    public static BaxShop getShop(Sign sign)
+    {
+        return getShop(sign.getBlock().getLocation());
     }
 
     public static boolean addLocation(Location location, BaxShop shop)
