@@ -29,7 +29,6 @@ import org.tbax.baxshops.ShopPlugin;
 import org.tbax.baxshops.serialization.BaxConfig;
 import org.tbax.baxshops.serialization.UpgradeableSerializable;
 import org.tbax.baxshops.serialization.UpgradeableSerialization;
-import org.tbax.baxshops.versioning.LegacyOfflinePlayer;
 import org.tbax.bukkit.notification.Notification;
 import org.tbax.bukkit.serialization.annotations.SerializeNonNull;
 import org.tbax.bukkit.serialization.annotations.SerializedAs;
@@ -38,7 +37,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
-public class StoredPlayer extends LegacyOfflinePlayer implements UpgradeableSerializable
+public class StoredPlayer implements OfflinePlayer, UpgradeableSerializable
 {
     public static final UUID DUMMY_UUID = ShopPlugin.getBaxConfig().getDummyId();
     public static final String DUMMY_NAME = ShopPlugin.getBaxConfig().getDummyName();
