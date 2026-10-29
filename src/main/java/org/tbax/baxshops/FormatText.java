@@ -366,6 +366,9 @@ public class FormatText
 
     private static @NotNull List<Component> flattenComponent(@NotNull Component component)
     {
+        if (component.children().isEmpty())
+            return Collections.singletonList(component);
+
         List<Component> result = new ArrayList<>();
         Deque<Pair<Component, Style>> stack = new ArrayDeque<>();
         stack.push(new Pair<>(component, component.style()));
