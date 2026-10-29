@@ -332,7 +332,7 @@ public class StoredPlayer implements OfflinePlayer, UpgradeableSerializable
     @Override
     public int getStatistic(@NotNull Statistic statistic) throws IllegalArgumentException
     {
-        return 0;
+        return getOfflinePlayer().getStatistic(statistic);
     }
 
     @Override
@@ -442,8 +442,8 @@ public class StoredPlayer implements OfflinePlayer, UpgradeableSerializable
     {
         if (this == obj)
             return true;
-        if (obj instanceof OfflinePlayer)
-            return equals((OfflinePlayer) obj);
+        if (obj instanceof OfflinePlayer other)
+            return equals(other);
         return false;
     }
 
