@@ -441,19 +441,7 @@ public class FormatText
 
     public static @NotNull Component stripColor(@NotNull Component component)
     {
-        List<Component> componentList = flattenComponent(component);
-        TextComponent result = Component.empty();
-        for (Component c : componentList) {
-            if (c instanceof TextComponent current) {
-                if (!current.content().isEmpty()) {
-                    result = result.append(Component.text(Format.stripColor(current.content())));
-                }
-            }
-            else {
-                result = result.append(c);
-            }
-        }
-        return result;
+        return Component.text(Format.stripColor(extractText(component)));
     }
 
     public static @NotNull String toChatString(@NotNull Component component)

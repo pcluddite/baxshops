@@ -388,6 +388,8 @@ public final class Format
                 sb.append(c);
             }
         }
+        if (sb.length() == str.length()) // do not create a new string if nothing changed
+            return str;
         return sb.toString();
     }
 
