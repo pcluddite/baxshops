@@ -315,12 +315,43 @@ public class FormatText
 
     public static @NotNull String listOr(@NotNull List<? extends CharSequence> elements)
     {
-        return Format.listOr(elements);
+        return listOr(elements, false);
+    }
+
+    public static @NotNull String listOr(@NotNull List<? extends CharSequence> elements, boolean oxford)
+    {
+        return list(elements, "or", oxford);
     }
 
     public static @NotNull String listAnd(@NotNull List<? extends CharSequence> elements)
     {
-        return Format.listAnd(elements);
+        return listAnd(elements, false);
+    }
+
+    public static @NotNull String listAnd(@NotNull List<? extends CharSequence> elements, boolean oxford)
+    {
+        return list(elements, "and", oxford);
+    }
+
+    public static @NotNull String list(@NotNull List<? extends CharSequence> elements, String conjunction)
+    {
+        return list(elements, conjunction, false);
+    }
+
+    public static @NotNull String list(@NotNull List<? extends CharSequence> elements, String conjunction,
+                                       boolean oxford)
+    {
+        if (elements.isEmpty())
+            return "";
+        if (elements.size() == 1)
+            return elements.get(0).toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.join(", ", elements.subList(0, elements.size() - 1)));
+        if (oxford && elements.size() > 2) // do not append comma on list with two elements
+            sb.append(',');
+        sb.append(' ').append(conjunction).append(' ');
+        sb.append(elements.get(elements.size() - 1));
+        return sb.toString();
     }
 
     public static @NotNull String toNumeral(int n)
