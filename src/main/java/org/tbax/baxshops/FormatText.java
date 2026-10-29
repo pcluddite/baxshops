@@ -287,6 +287,13 @@ public class FormatText
                 .append(Component.text(" ------------", NamedTextColor.GRAY));
     }
 
+    /**
+     * Generates a chat header with the given page number
+     * @param page the current page number
+     * @param maxPages the maximum pages
+     * @param command the command to set the page
+     * @return the chat header
+     */
     public static @NotNull Component header(int page, int maxPages, @NotNull String command)
     {
         Component text = Component.text("", NamedTextColor.GRAY);
@@ -313,31 +320,69 @@ public class FormatText
         return text;
     }
 
+    /**
+     * Creates a comma separated string with the last element separated by the conjunction "or"
+     * @param elements a list of strings
+     * @return a comma separated string
+     */
     public static @NotNull String listOr(@NotNull List<? extends CharSequence> elements)
     {
         return listOr(elements, false);
     }
 
+    /**
+     * Creates a comma separated string with the last element separated by the conjunction "or", optionally adding a
+     * comma before the conjunction.
+     * @param elements a list of strings
+     * @param oxford whether to add an Oxford comma
+     * @return a comma separated string
+     */
     public static @NotNull String listOr(@NotNull List<? extends CharSequence> elements, boolean oxford)
     {
         return list(elements, "or", oxford);
     }
 
+    /**
+     * Creates a comma separated string with the last element separated by the conjunction "and"
+     * @param elements a list of strings
+     * @return a comma separated string
+     */
     public static @NotNull String listAnd(@NotNull List<? extends CharSequence> elements)
     {
         return listAnd(elements, false);
     }
 
+    /**
+     * Creates a comma separated string with the last element separated by the conjunction "and", optionally adding a
+     * comma before the conjunction.
+     * @param elements a list of strings
+     * @param oxford whether to add an Oxford comma
+     * @return a comma separated string
+     */
     public static @NotNull String listAnd(@NotNull List<? extends CharSequence> elements, boolean oxford)
     {
         return list(elements, "and", oxford);
     }
 
+    /**
+     * Creates a comma separated string with the last element separated by the given conjunction
+     * @param elements a list of strings
+     * @param conjunction the conjunction to use between the list and the last element
+     * @return a comma separated string
+     */
     public static @NotNull String list(@NotNull List<? extends CharSequence> elements, String conjunction)
     {
         return list(elements, conjunction, false);
     }
 
+    /**
+     * Creates a comma separated string with the last element separated by the given conjunction, optionally adding a
+     * comma before the conjunction.
+     * @param elements a list of strings
+     * @param conjunction the conjunction to use between the list and the last element
+     * @param oxford whether to add an Oxford comma
+     * @return a comma separated string
+     */
     public static @NotNull String list(@NotNull List<? extends CharSequence> elements, String conjunction,
                                        boolean oxford)
     {
@@ -354,16 +399,35 @@ public class FormatText
         return sb.toString();
     }
 
+    /**
+     * Converts the integer into a Roman numeral
+     * @param n the integer
+     * @return a string of Roman numerals representing the integer
+     * @implNote If the integer is equal to {@code 0}, the string {@code "nihil"} is returned (Latin for "nothing"),
+     * as there is no Roman numeral representation of zero. Additionally, if the integer is negative, a {@code "-"}
+     * character is appended to the beginning of the string.
+     */
     public static @NotNull String toNumeral(int n)
     {
         return Format.toNumeral(n);
     }
 
+    /**
+     * Creates a user-friendly string by converting an all-caps underscore separated name to one with spaces and
+     * capital letters at the start of each word
+     * @param name the string to convert
+     * @return a user-friendly string
+     */
     public static @NotNull String toFriendlyName(@NotNull String name)
     {
         return Format.toFriendlyName(name);
     }
 
+    /**
+     * Creates a list of this {@code Component} and its child tree
+     * @param component the {@code Component}
+     * @return a list of {@code Component} objects
+     */
     private static @NotNull List<Component> flattenComponent(@NotNull Component component)
     {
         if (component.children().isEmpty())
@@ -399,6 +463,11 @@ public class FormatText
         return result;
     }
 
+    /**
+     * Converts the {@code Component} to a string with ANSI colors for use in the console
+     * @param component the {@code Component} containing the text to convert
+     * @return a string with ANSI characters representing colors
+     */
     public static @NotNull String toAnsiColor(@NotNull Component component)
     {
         StringBuilder sb = new StringBuilder();
@@ -427,6 +496,11 @@ public class FormatText
         return sb.toString();
     }
 
+    /**
+     * Extracts the text of a {@code Component} object
+     * @param component the {@code Component}
+     * @return the contents of the {@code Component} and its child tree
+     */
     public static @NotNull String extractText(@NotNull Component component)
     {
         List<Component> componentList = flattenComponent(component);
@@ -439,11 +513,22 @@ public class FormatText
         return sb.toString();
     }
 
+    /**
+     * Removes all styling from the {@code Component}, including any legacy {@link org.bukkit.ChatColor ChatColor}
+     * characters
+     * @param component the {@code Component}
+     * @return a {@code Component} with no styling
+     */
     public static @NotNull Component stripColor(@NotNull Component component)
     {
         return Component.text(Format.stripColor(extractText(component)));
     }
 
+    /**
+     * Converts a {@code Component} to a legacy chat string using {@link org.bukkit.ChatColor CharColor} characters
+     * @param component the {@code Component}
+     * @return a string with legacy {@code ChatColor} characters
+     */
     public static @NotNull String toChatString(@NotNull Component component)
     {
         List<Component> componentList = flattenComponent(component);
@@ -470,12 +555,23 @@ public class FormatText
         return sb.toString();
     }
 
+    /**
+     * Adds newlines without breaking up words with a maximum line length of {@code 50}
+     * @param input the {@code Component}
+     * @return a {@code Component} with newlines where the maximum line length is reached
+     */
     public static @NotNull Component wordWrap(@NotNull Component input)
     {
         final int MAX_LINE_LENGTH = 50;
         return wordWrap(input, MAX_LINE_LENGTH);
     }
 
+    /**
+     * Adds newlines without breaking up words with a given maximum line length
+     * @param input the {@code Component}
+     * @param maxLineLength the maximum line length
+     * @return a {@code Component} with newlines where the maximum line length is reached
+     */
     public static @NotNull Component wordWrap(@NotNull Component input, int maxLineLength) {
         List<Component> output = new ArrayList<>();
         StringBuilder currentWord = new StringBuilder();
@@ -536,22 +632,46 @@ public class FormatText
         return result;
     }
 
-
+    /**
+     * Converts an integer to a hexadecimal string, beginning with {@code "0x"}
+     * @param value the integer to convert
+     * @return a string with hexadecimal digits representing the integer
+     */
     public static @NotNull String toHexString(int value)
     {
         return toHexString(value, 6); // 6 is max hex digits in a byte
     }
 
+    /**
+     * Converts an integer to a hexadecimal string, beginning with {@code "0x"} and padded with zeros to fill the
+     * given width. If the string exceeds the width, no zeros are added and the string is not truncated.
+     * @param value the integer to convert
+     * @param width the minimum width of the string
+     * @return a string with hexadecimal digits representing the integer
+     */
     public static @NotNull String toHexString(int value, int width)
     {
         return "0x" + padLeft(Integer.toHexString(value).toUpperCase(), width, '0');
     }
 
+    /**
+     * Pads a string with spaces at the beginning to a given width
+     * @param s the string
+     * @param width the minimum width of the string
+     * @return a padded string
+     */
     public static @NotNull String padLeft(@NotNull String s, int width)
     {
         return padLeft(s, width, ' ');
     }
 
+    /**
+     * Pads a string with a given character at the beginning to a given width
+     * @param s the string
+     * @param width the minimum width of the string
+     * @param padChar the padding character
+     * @return a padded string
+     */
     public static @NotNull String padLeft(@NotNull String s, int width, char padChar)
     {
         if (s.length() >= width) return s;
@@ -563,11 +683,24 @@ public class FormatText
         return sb.toString();
     }
 
+    /**
+     * Pads a string with spaces at the end to a given width
+     * @param s the string
+     * @param width the minimum width of the string
+     * @return a padded string
+     */
     public static @NotNull String padRight(@NotNull String s, int width)
     {
         return padRight(s, width, ' ');
     }
 
+    /**
+     * Pads a string with a given character at the end to a given width
+     * @param s the string
+     * @param width the minimum width of the string
+     * @param padChar the padding character
+     * @return a padded string
+     */
     public static @NotNull String padRight(@NotNull String s, int width, char padChar)
     {
         if (s.length() >= width) return s;
@@ -579,6 +712,11 @@ public class FormatText
         return sb.toString();
     }
 
+    /**
+     * Checks if a string matches the pattern of a UUID
+     * @param str the string to check
+     * @return true if the string matches the format of a UUID; otherwise, false
+     */
     public static boolean isUUID(@NotNull String str)
     {
         return UUID_PATTERN.matcher(str).matches();
